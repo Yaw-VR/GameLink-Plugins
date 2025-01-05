@@ -118,7 +118,522 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="defProfile" xml:space="preserve">
-    <value>{"gameName":"Microsoft Flight Simulator 2020","Name":"Default","components":[{"constant":false,"input_index":5,"output_index":0,"multiplierPos":1.0,"multiplierNeg":1.0,"offset":0.0,"inverse":true,"limit":-1.0,"smoothing":1.0,"enabled":true,"math":null,"spikeflatter":null,"deadzone":0.0,"type":0},{"constant":false,"input_index":3,"output_index":1,"multiplierPos":1.0,"multiplierNeg":1.0,"offset":0.0,"inverse":false,"limit":-1.0,"smoothing":1.0,"enabled":true,"math":null,"spikeflatter":null,"deadzone":0.0,"type":0},{"constant":false,"input_index":4,"output_index":2,"multiplierPos":1.0,"multiplierNeg":1.0,"offset":0.0,"inverse":false,"limit":-1.0,"smoothing":1.0,"enabled":true,"math":null,"spikeflatter":null,"deadzone":0.0,"type":0},{"constant":true,"input_index":25,"output_index":4,"multiplierPos":17.0,"multiplierNeg":17.0,"offset":0.0,"inverse":false,"limit":-1.0,"smoothing":1.0,"enabled":true,"math":null,"spikeflatter":null,"deadzone":0.0,"type":0}],"effects":{"effectID":0,"inputID":2,"multiplier":1.1,"colors":[{"r":255,"g":255,"b":255},{"r":80,"g":80,"b":80},{"r":255,"g":255,"b":0},{"r":0,"g":0,"b":255}]}}</value>
+    <value>{
+    "GameName": "Microsoft Flight Simulator 2024",
+    "Name": "Default",
+    "Components": [
+        {
+            "Constant": false,
+            "Input_index": 47,
+            "Output_index": 2,
+            "MultiplierPos": 0.15,
+            "MultiplierNeg": 0.15,
+            "Offset": 0.0,
+            "Inverse": true,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [
+                {
+                    "ComponentCondition": 0,
+                    "OtherIndex": 4,
+                    "Value": -90.0
+                },
+                {
+                    "ComponentCondition": 1,
+                    "OtherIndex": 4,
+                    "Value": 90.0
+                }
+            ],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 47,
+            "Output_index": 2,
+            "MultiplierPos": 0.15,
+            "MultiplierNeg": 0.15,
+            "Offset": 180.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [
+                {
+                    "ComponentCondition": 1,
+                    "OtherIndex": 47,
+                    "Value": -89.9999
+                }
+            ],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 47,
+            "Output_index": 2,
+            "MultiplierPos": 0.15,
+            "MultiplierNeg": 0.15,
+            "Offset": -180.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [
+                {
+                    "ComponentCondition": 0,
+                    "OtherIndex": 47,
+                    "Value": 89.9999
+                }
+            ],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 54,
+            "Output_index": 2,
+            "MultiplierPos": 0.01,
+            "MultiplierNeg": 0.01,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 0.10234818,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 56,
+            "Output_index": 2,
+            "MultiplierPos": 2.5,
+            "MultiplierNeg": 2.5,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 3,
+            "Output_index": 1,
+            "MultiplierPos": 0.45,
+            "MultiplierNeg": 0.45,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 46,
+            "Output_index": 1,
+            "MultiplierPos": 0.4,
+            "MultiplierNeg": 0.4,
+            "Offset": 0.0,
+            "Inverse": true,
+            "Limit": -1.0,
+            "Smoothing": 0.3015451,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 53,
+            "Output_index": 0,
+            "MultiplierPos": 0.1,
+            "MultiplierNeg": 0.1,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 0.10234817,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 2,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 56,
+            "Output_index": 0,
+            "MultiplierPos": 0.1,
+            "MultiplierNeg": 0.1,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 2,
+            "Condition": [
+                {
+                    "ComponentCondition": 1,
+                    "OtherIndex": 9,
+                    "Value": 100.0
+                }
+            ],
+            "Math": []
+        },
+        {
+            "Constant": true,
+            "Input_index": 74,
+            "Output_index": 4,
+            "MultiplierPos": 50.0,
+            "MultiplierNeg": 50.0,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 10,
+            "Output_index": 3,
+            "MultiplierPos": 0.0025,
+            "MultiplierNeg": 0.0025,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [
+                {
+                    "ComponentCondition": 0,
+                    "OtherIndex": 11,
+                    "Value": 0.0
+                },
+                {
+                    "ComponentCondition": 0,
+                    "OtherIndex": 12,
+                    "Value": 0.0
+                },
+                {
+                    "ComponentCondition": 0,
+                    "OtherIndex": 13,
+                    "Value": 0.0
+                }
+            ],
+            "Math": [
+                {
+                    "MathType": 0,
+                    "OtherInput": 11
+                },
+                {
+                    "MathType": 0,
+                    "OtherInput": 12
+                },
+                {
+                    "MathType": 0,
+                    "OtherInput": 13
+                }
+            ]
+        },
+        {
+            "Constant": false,
+            "Input_index": 10,
+            "Output_index": 3,
+            "MultiplierPos": 0.0033,
+            "MultiplierNeg": 0.0033,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [
+                {
+                    "ComponentCondition": 0,
+                    "OtherIndex": 11,
+                    "Value": 0.0
+                },
+                {
+                    "ComponentCondition": 0,
+                    "OtherIndex": 12,
+                    "Value": 0.0
+                },
+                {
+                    "ComponentCondition": 2,
+                    "OtherIndex": 13,
+                    "Value": 0.0
+                }
+            ],
+            "Math": [
+                {
+                    "MathType": 0,
+                    "OtherInput": 11
+                },
+                {
+                    "MathType": 0,
+                    "OtherInput": 12
+                }
+            ]
+        },
+        {
+            "Constant": false,
+            "Input_index": 10,
+            "Output_index": 3,
+            "MultiplierPos": 0.005,
+            "MultiplierNeg": 0.005,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [
+                {
+                    "ComponentCondition": 0,
+                    "OtherIndex": 11,
+                    "Value": 0.0
+                },
+                {
+                    "ComponentCondition": 2,
+                    "OtherIndex": 12,
+                    "Value": 0.0
+                },
+                {
+                    "ComponentCondition": 2,
+                    "OtherIndex": 13,
+                    "Value": 0.0
+                }
+            ],
+            "Math": [
+                {
+                    "MathType": 0,
+                    "OtherInput": 11
+                }
+            ]
+        },
+        {
+            "Constant": false,
+            "Input_index": 10,
+            "Output_index": 3,
+            "MultiplierPos": 0.01,
+            "MultiplierNeg": 0.01,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [
+                {
+                    "ComponentCondition": 2,
+                    "OtherIndex": 11,
+                    "Value": 0.0
+                },
+                {
+                    "ComponentCondition": 2,
+                    "OtherIndex": 12,
+                    "Value": 0.0
+                },
+                {
+                    "ComponentCondition": 2,
+                    "OtherIndex": 13,
+                    "Value": 0.0
+                }
+            ],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 28,
+            "Output_index": 3,
+            "MultiplierPos": 1.0,
+            "MultiplierNeg": 1.0,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": [
+                {
+                    "MathType": 2,
+                    "OtherInput": 9
+                }
+            ]
+        },
+        {
+            "Constant": false,
+            "Input_index": 71,
+            "Output_index": 0,
+            "MultiplierPos": 1.0,
+            "MultiplierNeg": 1.0,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 70,
+            "Output_index": 2,
+            "MultiplierPos": 0.4,
+            "MultiplierNeg": 0.4,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }
+    ],
+    "Effects": {
+        "EffectID": 0,
+        "InputID": 5,
+        "Multiplier": 1.1,
+        "Colors": [
+            {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            {
+                "R": 80,
+                "G": 80,
+                "B": 80
+            },
+            {
+                "R": 4,
+                "G": 94,
+                "B": 0
+            },
+            {
+                "R": 0,
+                "G": 0,
+                "B": 255
+            }
+        ]
+    },
+    "Functions": []
+}</value>
   </data>
   <data name="description" xml:space="preserve">
     <value>Please patch before first use</value>
