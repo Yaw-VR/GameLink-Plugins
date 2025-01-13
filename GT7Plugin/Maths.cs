@@ -4,41 +4,11 @@ namespace PluginHelper
 {
     public static class Maths
     {
-        const double RAD2DEG = 180 / Math.PI;
+        const float RAD2DEG = (float)(180.0f / Math.PI);
 
-        const double DEG2RAD = Math.PI / 180;
+        const float DEG2RAD = (float)(Math.PI / 180);
 
         public const float GRAVITY = 9.81f;
-
-        /// <summary>
-        /// Convert Radians to Degrees
-        /// </summary>
-        /// <param name="rad">radians</param>
-        /// <returns>degrees</returns>
-        public static double ToDegrees(double rad)
-        {
-            return rad * RAD2DEG;
-        }
-
-        public static float ToDegrees(float rad)
-        {
-            return (float)(rad * RAD2DEG);
-        }
-
-        /// <summary>
-        /// Convert Degrees to Radians
-        /// </summary>
-        /// <param name="deg">degrees</param>
-        /// <returns>radians</returns>
-        public static double ToRadians(double deg)
-        {
-            return deg * DEG2RAD;
-        }
-
-        public static float ToRadians(float deg)
-        {
-            return (float)(deg * DEG2RAD);
-        }
 
 
         public static Quaternion ToQuat(this Vector3 v, float degrees = 0f)
@@ -46,32 +16,13 @@ namespace PluginHelper
             return VectorToQuaternion(v.X, v.Y, v.Z, degrees);
         }
 
-        public static Vector3 WorldToLocal2(Vector3 globalVector)
-        {
-            var gn = Vector3.Normalize(globalVector);
-
-            var fwdVec = new Vector3(0, 0, 1);
-
-            Vector3 rotationAxis = Vector3.Cross(gn, fwdVec);
-
-            float angle = (float)(Math.Acos(Vector3.Dot(gn, fwdVec)) * RAD2DEG);
-
-            Quaternion rQ = Quaternion.Normalize(Quaternion.CreateFromAxisAngle(rotationAxis, angle));
-
-
-            //var local_velocity =  (rQ * VectorToQuaternion(globalVector.X, globalVector.Y, globalVector.Z, 0, false)).Vector();
-            var local_velocity = WorldtoLocal(rQ, globalVector);
-
-            return local_velocity;
-        }
-
         public static Quaternion VectorToQuaternion(float x = 0f, float y = 0f, float z = 0f, float angle = 0f, bool angleInDegrees = true)
         {
             Vector3 axis = new Vector3(x, y, z);
 
-            var a = 0f;
+            float a = 0f;
             if (angleInDegrees)
-                a = ToRadians(angle / 2);
+                a = (angle / 2) * DEG2RAD;
             else
                 a = angle / 2;
 
@@ -83,28 +34,14 @@ namespace PluginHelper
                  (float)Math.Cos(a));
         }
 
-
-
-        /// <summary>
-        /// Convert quaternion to Euler angles
-        /// </summary>
-        /// <param name="q"></param>
-        /// <returns>pitch(x-rotation), yaw (y-rotation) , roll (z-rotation)</returns>
-        public static (float pitch, float yaw, float roll) ToEuler(this Quaternion q, bool returnDegrees = true)
+        public static (float pitch, float yaw, float roll) ToPitchYawRoll(this Quaternion q)
         {
+            var yaw = (float)(Math.Atan2(2 * (q.Y * q.W - q.X * q.Z), 1 - 2 * (q.Y * q.Y + q.Z * q.Z)) * RAD2DEG);
+            var pitch = (float)(Math.Atan2(2 * (q.X * q.W - q.Y * q.Z), 1 - 2 * (q.X * q.X + q.Z * q.Z)) * RAD2DEG);
+            var roll = (float)(Math.Asin(2 * (q.X * q.Y + q.Z * q.W)) * RAD2DEG);
 
-            var p = (float)q.ToPitch();
-            var y = (float)q.ToYaw();
-            var r = (float)q.ToRoll();
-
-            if (!returnDegrees)
-                return (p, y, r);
-
-            // Convert the angles from radians to degrees
-            return (ToDegrees(p), ToDegrees(y), ToDegrees(r));
-
+            return (pitch, yaw, roll);
         }
-
 
         /// <summary>
         /// Convert a world space vector to local space
@@ -165,21 +102,13 @@ namespace PluginHelper
 
 
 
-        // Convert a vector of yaw pitch and roll to a quaternion
-        /// <summary>
-        /// convert euler angles to a "y-up" quaternion
-        /// </summary>
-        /// <param name="pitch"></param>
-        /// <param name="yaw"></param>
-        /// <param name="roll"></param>
-        /// <param name="returnDegrees">return angles in degrees instead of radians</param>
         /// <returns></returns>
         public static Quaternion QuaternionFromEuler(float pitch, float yaw, float roll, bool inDegrees = true)
         {
             if (!inDegrees)
                 return Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll);
 
-            return Quaternion.CreateFromYawPitchRoll((float)ToRadians(yaw), (float)ToRadians(pitch), (float)ToRadians(roll));
+            return Quaternion.CreateFromYawPitchRoll((float)(yaw * DEG2RAD), (float)(pitch * DEG2RAD), (float)(roll * DEG2RAD));
         }
 
 
@@ -213,8 +142,6 @@ namespace PluginHelper
             // Define the base direction vector (forward direction)
             Vector3 baseDirection = new Vector3(0, 0, 1);
 
-            // Rotate the base direction vector using the quaternion
-            //Vector3 direction = Vector3.Transform(baseDirection, q);
             Vector3 direction = rotate_vector_by_quaternion(q, baseDirection);
 
             return direction;

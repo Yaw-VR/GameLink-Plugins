@@ -14,7 +14,7 @@ namespace GT7Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Gran Turismo 7")]
-    [ExportMetadata("Version", "1.1")]
+    [ExportMetadata("Version", "1.2")]
     public class GT7Plugin : Game
     {
         private IProfileManager controller;
@@ -115,7 +115,7 @@ namespace GT7Plugin
             _previous_local_velocity = local_velocity;
 
 
-            var (pitch, yaw, roll) = Maths.ToEuler(Q, true);
+            var (pitch, yaw, roll) = Q.ToPitchYawRoll(); // Q.ToEuler(true);
 
 
             bool updateSusp = false;
