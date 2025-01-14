@@ -1,19 +1,20 @@
-﻿using GT7Plugin.Properties;
+﻿using Microsoft.VisualBasic;
+
 using PluginHelper;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
-using System.Net.Sockets;
 using System.Numerics;
 using System.Reflection;
+
 using YawGLAPI;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 using Quaternion = System.Numerics.Quaternion;
 
 namespace GT7Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Gran Turismo 7")]
-    [ExportMetadata("Version", "1.0")]
+    [ExportMetadata("Version", "1.2")]
     public class GT7Plugin : Game
     {
         private IProfileManager controller;
@@ -27,7 +28,7 @@ namespace GT7Plugin
 
         public bool PATCH_AVAILABLE => false;
 
-        public string AUTHOR => "YawVR";
+        public string AUTHOR => "Trevor Jones";
 
         public Stream Logo => GetStream("logo.png");
 
@@ -35,46 +36,41 @@ namespace GT7Plugin
 
         public Stream Background => GetStream("wide.png");
 
-        public string Description => "";
+        public string Description => GetString("description.html");
+
+        private string defProfilejson => GetString("Default.yawglprofile");
 
         private UDPListener listener;
         private Cryptor cryptor;
-        private FieldInfo[] fields = typeof(SimulatorPacket).GetFields();
+        private FieldInfo[] fields = typeof(GT7Output).GetFields();
+        private bool _seenPacket = false;
+        private Vector3 _previous_local_velocity = new Vector3(0, 0, 0);
+        private const float _samplerate = 1 / 60f;        
 
-        public LedEffect DefaultLED()
-        {
-            return dispacther.JsonToLED(Resources.defProfile);
-        }
+        public LedEffect DefaultLED() => dispacther.JsonToLED(defProfilejson);
 
-        public List<Profile_Component> DefaultProfile()
-        {
-            return dispacther.JsonToComponents(Resources.defProfile);
-        }
+        public List<Profile_Component> DefaultProfile() => dispacther.JsonToComponents(defProfilejson);
 
-        public void Exit()
-        {
-            listener.Stop();
-        }
 
-        public Dictionary<string, ParameterInfo[]> GetFeatures()
-        {
-            return new Dictionary<string, ParameterInfo[]>();
-        }
+        public void Exit() => listener?.Stop();
 
-        public string[] GetInputData()
-        {
-            string[] inputs = new string[fields.Length];
+        public Dictionary<string, ParameterInfo[]> GetFeatures() => new();
 
-            for (int i = 0; i < fields.Length; i++)
-            {
-                inputs[i] = fields[i].Name;
-            }
-            return inputs;
-        }
+        public string[] GetInputData() => fields.Select(f => f.Name).ToArray();
+
+        private int inputPort = 33740;
 
         public void Init()
         {
-            listener = new UDPListener();
+            
+
+            if (!int.TryParse(Interaction.InputBox("Enter the incoming data port for Gran Turismo 7 \nLeave default value if its running on the Playstation", "Endpoint", "33740"), out inputPort)
+                || inputPort < 0 || inputPort > 65535)
+            {
+                inputPort = 33740;
+            }
+
+            listener = new UDPListener(inputPort);
             cryptor = new Cryptor();
             listener.OnPacketReceived += Listener_OnPacketReceived;
             suspStopwatch.Restart();
@@ -83,55 +79,81 @@ namespace GT7Plugin
         private void Listener_OnPacketReceived(object sender, byte[] buffer)
         {
             cryptor.Decrypt(buffer);
-            SimulatorPacket sp = new SimulatorPacket();
+            var sp = new SimulatorPacket();
             sp.Read(buffer);
 
+            if (sp.Flags.HasFlag(SimulatorFlags.CarOnTrack) && !sp.Flags.HasFlag(SimulatorFlags.Paused) && !sp.Flags.HasFlag(SimulatorFlags.LoadingOrProcessing))
+            {
+                ReadFunction(sp);
 
-            Vector3 carRotation = new Vector3(sp.RotationX, sp.RotationY, sp.RotationZ);
-            Vector3 worldVelocity = new Vector3(sp.VelocityX, sp.VelocityY, sp.VelocityZ);
+            }
+
+            _seenPacket = _seenPacket || true;
+
+        }
+
+        private void ReadFunction(SimulatorPacket sp)
+        {
+            var Q = new Quaternion(new Vector3(sp.RotationX, sp.RotationY, sp.RotationZ), sp.RelativeOrientationToNorth);
+            var local_velocity = Maths.WorldtoLocal(Q, new Vector3(sp.VelocityX, sp.VelocityY, sp.VelocityZ));
 
 
-            var Q = new Quaternion(carRotation, sp.RelativeOrientationToNorth);
-            var local_velocity = Maths.WorldtoLocal(Q, worldVelocity);
+            var sway = CalculateCentripetalAcceleration(local_velocity, new Vector3(sp.AngularVelocityX, sp.AngularVelocityY, sp.AngularVelocityZ));
+            var surge = 0f;
+            var heave = 0f;
 
-            var (pitch, yaw, roll) = Maths.ToEuler(Q, true);
+            if (_seenPacket)
+            {
+                var delta_velocity = local_velocity - _previous_local_velocity;
 
-            sp.RotationX = pitch;
-            sp.RotationY = yaw;
-            sp.RotationZ = roll;
+                surge = delta_velocity.Z / _samplerate / 9.81f;
+                heave = delta_velocity.Y / _samplerate / 9.81f;
+            }
 
-            sp.VelocityX = local_velocity.X;
-            sp.VelocityY = local_velocity.Y;
-            sp.VelocityZ = local_velocity.Z;
+
+
+            _previous_local_velocity = local_velocity;
+
+
+            var (pitch, yaw, roll) = Q.ToPitchYawRoll(); // Q.ToEuler(true);
 
 
             bool updateSusp = false;
+
             if (suspStopwatch.ElapsedMilliseconds > 100)
             {
                 updateSusp = true;
                 suspStopwatch.Restart();
             }
 
-            for (int i = 0; i < fields.Length; i++)
+            var output = new GT7Output()
             {
+                Yaw = yaw,
+                Pitch = pitch,
+                Roll = roll,
+                Sway = sway,
+                Surge = surge,
+                Heave = heave,
+                Kph = sp.MetersPerSecond * 3.6f,
+                MaxKph = sp.CalculatedMaxSpeed * 3.6f,
+                RPM = sp.EngineRPM,                
+                OnTrack = sp.Flags.HasFlag(SimulatorFlags.CarOnTrack) ? 1 : 0,
+                IsPaused = sp.Flags.HasFlag(SimulatorFlags.Paused) ? 1 : 0,
+                Loading = sp.Flags.HasFlag(SimulatorFlags.LoadingOrProcessing) ? 1 : 0
+            };
 
-              
-                //52,53,54,55
-                if (i >= 52 && i <= 55)
-                {
-
-                    if (updateSusp)
-                    {
-                        controller.SetInput(i, Convert.ToSingle(fields[i].GetValue(sp)));
-                    }
-                
-                }
-                else
-                {
-                    controller.SetInput(i, Convert.ToSingle(fields[i].GetValue(sp)));
-                }
+            if (updateSusp)
+            {
+                output.TireFL_SusHeight = sp.TireFL_SusHeight;
+                output.TireFR_SusHeight = sp.TireFR_SusHeight;
+                output.TireRL_SusHeight = sp.TireRL_SusHeight;
+                output.TireRR_SusHeight = sp.TireRR_SusHeight;
             }
 
+            for (int i = 0; i < fields.Length; i++)
+            {
+                controller.SetInput(i, Convert.ToSingle(fields[i].GetValue(output)));
+            }
         }
 
         public void PatchGame()
@@ -148,9 +170,53 @@ namespace GT7Plugin
         {
             var assembly = GetType().Assembly;
             var rr = assembly.GetManifestResourceNames();
+            
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
+
+            if (!rr.Contains(fullResourceName))
+            {
+                dispacther.ShowNotification(NotificationType.ERROR, "Resource not found - " + fullResourceName);
+            }
+            
+            
+
             return assembly.GetManifestResourceStream(fullResourceName);
         }
 
+        private string GetString(string resourceName)
+        {
+
+            var result = string.Empty;
+            try
+            {
+                using var stream = GetStream(resourceName);
+
+                if (stream != null)
+                {
+                    using var reader = new StreamReader(stream);
+                    result = reader.ReadToEnd();
+                }
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                dispacther.ShowNotification(NotificationType.ERROR, "Error loading resource - " + e.Message);
+            }
+
+
+            return result;
+        }
+
+
+        public float CalculateCentripetalAcceleration(Vector3 velocity, Vector3 angularVelocity)
+        {
+            var Fc = velocity.Length() * angularVelocity.Length();
+
+            return Fc * (angularVelocity.Y >= 0 ? -1 : 1);
+
+        }
+
+
+        
     }
 }
