@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\description.html" />
+    <None Remove="Resources\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\wide.png" />
+    <EmbeddedResource Include="Resources\Default.yawglprofile" />
+    <EmbeddedResource Include="Resources\description.html" />
+    <EmbeddedResource Include="Resources\logo.png" />
+    <EmbeddedResource Include="Resources\recent.png" />
+  </ItemGroup>
+
+    <ItemGroup>
+	    <PackageReference Include="System.ComponentModel.Composition" Version="9.0.0" />
+    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YawGLAPI\YawGLAPI.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+<Project>
+  <!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
+	<PropertyGroup>
+		<OutputDir>$(SolutionDir)OutputDlls\</OutputDir>
+		<OutFileSuffix Condition="$(Configuration) == 'Debug'" >_debug</OutFileSuffix>
+	</PropertyGroup>
+	<Target Name="CopyToOutput" AfterTargets="Build">
+		<ItemGroup>
+			<LibraryFiles Include="$(TargetDir)\*.dll" Exclude="$(TargetDir)\YawGLAPI.dll" />
+		</ItemGroup>
+		<Message Text="[$(ProjectName)]-[CopyToOutput] Copying Files $(OutputDir)" Importance="High"/>
+		<Copy SourceFiles="@(LibraryFiles)" DestinationFolder="$(OutputDir)\" >
+			<Output TaskParameter="CopiedFiles" ItemName="CopiedFiles" />
+		</Copy>
+		<Message Text="[$(ProjectName)]-[CopyToOutput] Copied @(CopiedFiles->Count()) files to $(OutputDir)" Importance="High" />
+	</Target>
+</Project>

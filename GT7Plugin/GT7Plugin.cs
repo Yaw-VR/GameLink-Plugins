@@ -40,16 +40,18 @@ namespace GT7Plugin
 
         private string defProfilejson => GetString("Default.yawglprofile");
 
+        
+
+        public LedEffect DefaultLED() => dispacther.JsonToLED(defProfilejson);
+
+        public List<Profile_Component> DefaultProfile() => dispacther.JsonToComponents(defProfilejson);
+
         private UDPListener listener;
         private Cryptor cryptor;
         private FieldInfo[] fields = typeof(GT7Output).GetFields();
         private bool _seenPacket = false;
         private Vector3 _previous_local_velocity = new Vector3(0, 0, 0);
-        private const float _samplerate = 1 / 60f;        
-
-        public LedEffect DefaultLED() => dispacther.JsonToLED(defProfilejson);
-
-        public List<Profile_Component> DefaultProfile() => dispacther.JsonToComponents(defProfilejson);
+        private const float _samplerate = 1 / 60f;
 
 
         public void Exit() => listener?.Stop();
