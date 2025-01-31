@@ -115,9 +115,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F12024Plugin", "F12024Plugi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OverloadPlugin", "OverloadPlugin\OverloadPlugin.csproj", "{72D8C5AD-5439-4235-A355-A2546A509A05}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D0758FA8-7FDF-4D8B-97BA-39718AC8C2C4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACEPlugin", "ACEPlugin\ACEPlugin.csproj", "{88C6FDD2-9CD4-4015-BB6C-3389C29003BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDUSCPlugin", "TDUSCPlugin\TDUSCPlugin.csproj", "{B1A7D5E1-4F6B-4D3A-9F8D-2C8A1E6B5A3F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{0CE2DEE3-ACB5-45F6-B995-6496481B4875}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedLib", "SharedLib\SharedLib.shproj", "{A0988E26-18F3-4AE4-95DF-3BD3B0ABE37E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -353,8 +357,23 @@ Global
 		{88C6FDD2-9CD4-4015-BB6C-3389C29003BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88C6FDD2-9CD4-4015-BB6C-3389C29003BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88C6FDD2-9CD4-4015-BB6C-3389C29003BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1A7D5E1-4F6B-4D3A-9F8D-2C8A1E6B5A3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A7D5E1-4F6B-4D3A-9F8D-2C8A1E6B5A3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A7D5E1-4F6B-4D3A-9F8D-2C8A1E6B5A3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A7D5E1-4F6B-4D3A-9F8D-2C8A1E6B5A3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5C463417-8B52-457C-A1AA-C43ED23296A3} = {0CE2DEE3-ACB5-45F6-B995-6496481B4875}
+		{A0988E26-18F3-4AE4-95DF-3BD3B0ABE37E} = {0CE2DEE3-ACB5-45F6-B995-6496481B4875}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedLib\SharedLib.projitems*{72d8c5ad-5439-4235-a355-a2546a509a05}*SharedItemsImports = 5
+		SharedLib\SharedLib.projitems*{88c6fdd2-9cd4-4015-bb6c-3389c29003be}*SharedItemsImports = 5
+		SharedLib\SharedLib.projitems*{9dd14943-3f95-45c8-aace-0eb2582e47ef}*SharedItemsImports = 5
+		SharedLib\SharedLib.projitems*{a0988e26-18f3-4ae4-95df-3bd3b0abe37e}*SharedItemsImports = 13
+		SharedLib\SharedLib.projitems*{b1a7d5e1-4f6b-4d3a-9f8d-2c8a1e6b5a3f}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

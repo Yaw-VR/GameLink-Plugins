@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SharedLib;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
@@ -149,12 +151,12 @@ namespace YawVR_Game_Engine.Plugin
         public string AUTHOR => "YawVR";
 
 
-        public Stream Logo => GetStream("logo.png");
-        public Stream SmallLogo => GetStream("recent.png");
-        public Stream Background => GetStream("wide.png");
-        public string Description => GetString("description.html");
+        public Stream Logo => ResourceHelper.GetStream("logo.png");
+        public Stream SmallLogo => ResourceHelper.GetStream("recent.png");
+        public Stream Background => ResourceHelper.GetStream("wide.png");
+        public string Description => ResourceHelper.GetString("description.html");
 
-        private string defProfilejson => GetString("Default.yawglprofile");
+        private string defProfilejson => ResourceHelper.GetString("Default.yawglprofile");
 
         public List<Profile_Component> DefaultProfile() => dispatcher.JsonToComponents(defProfilejson);
 
@@ -279,46 +281,7 @@ namespace YawVR_Game_Engine.Plugin
         {
             return null;
         }
-        Stream GetStream(string resourceName)
-        {
-            var assembly = GetType().Assembly;
-            var rr = assembly.GetManifestResourceNames();
-
-            string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
-
-            if (!rr.Contains(fullResourceName))
-            {
-                dispatcher.ShowNotification(NotificationType.ERROR, "Resource not found - " + fullResourceName);
-            }
-
-
-
-            return assembly.GetManifestResourceStream(fullResourceName);
-        }
-
-        private string GetString(string resourceName)
-        {
-
-            var result = string.Empty;
-            try
-            {
-                using var stream = GetStream(resourceName);
-
-                if (stream != null)
-                {
-                    using var reader = new StreamReader(stream);
-                    result = reader.ReadToEnd();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                dispatcher.ShowNotification(NotificationType.ERROR, "Error loading resource - " + e.Message);
-            }
-
-
-            return result;
-        }
+        
     }
        
 }

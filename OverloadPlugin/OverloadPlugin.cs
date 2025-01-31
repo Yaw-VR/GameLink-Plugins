@@ -1,5 +1,6 @@
 ﻿using OverloadPlugin;
 
+using SharedLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -25,10 +26,10 @@ namespace YawVR_Game_Engine.Plugin
         public int STEAM_ID => 0;
         public bool PATCH_AVAILABLE => false;
         public string AUTHOR => "PhunkaeG, Trevor Jones (Drowhunter)";
-        public string Description => GetString("description.html");
-        public Stream Logo => GetStream("logo.png");
-        public Stream SmallLogo => GetStream("recent.png");
-        public Stream Background => GetStream("wide.png");
+        public string Description => ResourceHelper.GetString("description.html");
+        public Stream Logo => ResourceHelper.GetStream("logo.png");
+        public Stream SmallLogo => ResourceHelper.GetStream("recent.png");
+        public Stream Background => ResourceHelper.GetStream("wide.png");
 
         #endregion
 
@@ -43,7 +44,7 @@ namespace YawVR_Game_Engine.Plugin
 
         
 
-        public List<Profile_Component> DefaultProfile() => dispatcher.JsonToComponents(GetString("Default.yawglprofile"));
+        public List<Profile_Component> DefaultProfile() => dispatcher.JsonToComponents(ResourceHelper.GetString("Default.yawglprofile"));
 
         public LedEffect DefaultLED() => new(EFFECT_TYPE.KNIGHT_RIDER_2, 7,
             [
@@ -166,51 +167,7 @@ namespace YawVR_Game_Engine.Plugin
             return null;
         }
 
-        private Stream GetStream(string resourceName)
-        {
-            var assembly = GetType().Assembly;
-            var rr = assembly.GetManifestResourceNames();
-            string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
-            try
-            {
-                var retval = assembly.GetManifestResourceStream(fullResourceName);
-                return retval;
-            }
-            catch (Exception e)
-            {               
-            }
-
-            return new MemoryStream();
-        }
-
-        private string GetString(string resourceName)
-        {
-
-            var result = string.Empty;
-            try
-            {
-                using (var stream = GetStream(resourceName))
-                {
-
-                    if (stream != null)
-                    {
-                        using (var reader = new StreamReader(stream))
-                        {
-                            result = reader.ReadToEnd();
-                        }
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                dispatcher.ShowNotification(NotificationType.ERROR, "Error loading resource - " + e.Message);
-            }
-
-
-            return result;
-        }
+        
 
     }
 }
