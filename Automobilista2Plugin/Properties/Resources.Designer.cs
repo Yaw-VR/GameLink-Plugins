@@ -70,5 +70,12 @@ namespace Automobilista2Plugin.Properties {
                 return ResourceManager.GetString("description", resourceCulture);
             }
         }
-    }
+        internal static string profile
+        {
+            get
+            {
+                return ResourceManager.GetString("profile", resourceCulture);
+            }
+        }
+     }
 }

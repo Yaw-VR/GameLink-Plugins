@@ -85,6 +85,9 @@ namespace YawVR_Game_Engine.Plugin {
         private float _SplitTime;
         private double[,] _ParticipantInfo = new double[32, 16];
 
+        //GameState
+        private char _GameSessionState;                     // 15 -- first 3 bits are used for game state enum, second 3 bits for session state enum See shared memory example file for the enums
+        private int _GameState;
 
 
         public PCars2_UDP(UdpClient listen, IPEndPoint group) {
@@ -92,21 +95,25 @@ namespace YawVR_Game_Engine.Plugin {
             _groupEP = group;
         }
 
-        public void readPackets() {
+        public void readPackets()
+        {
             byte[] UDPpacket = listener.Receive(ref _groupEP);
             Stream stream = new MemoryStream(UDPpacket);
             var binaryReader = new BinaryReader(stream);
 
             ReadBaseUDP(stream, binaryReader);
-            if (PacketType == 0) {
+            if (PacketType == 0)
+            {
                 ReadTelemetryData(stream, binaryReader);
-
-
             }
-            else if (PacketType == 3) {
+            else if (PacketType == 3)
+            {
                 ReadTimings(stream, binaryReader);
             }
-
+            else if (PacketType == 4)
+            {
+                ReadGameState(stream, binaryReader);
+            }
         }
 
         public void ReadBaseUDP(Stream stream, BinaryReader binaryReader) {
@@ -332,6 +339,13 @@ namespace YawVR_Game_Engine.Plugin {
                 ParticipantInfo[i, 15] = Convert.ToDouble(binaryReader.ReadSingle());  //sCurrentSectorTime
             }
 
+        }
+
+        public void ReadGameState(Stream stream, BinaryReader binaryReader)
+        {
+            stream.Position = 14;
+            _GameSessionState = binaryReader.ReadChar();
+            GameState = _GameSessionState & 0b00000111;
         }
 
         public void close_UDP_Connection() {
@@ -992,6 +1006,17 @@ namespace YawVR_Game_Engine.Plugin {
             }
             set {
                 _ParticipantInfo = value;
+            }
+        }
+        public int GameState
+        {
+            get
+            {
+                return _GameState;
+            }
+            set
+            {
+                _GameState = value;
             }
         }
     }

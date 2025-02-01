@@ -13,7 +13,7 @@ namespace YawVR_Game_Engine.Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Automobilista2")]
-    [ExportMetadata("Version", "1.0")]
+    [ExportMetadata("Version", "1.1")]
     public class Automobilista2Plugin : Game {
 
 
@@ -35,6 +35,8 @@ namespace YawVR_Game_Engine.Plugin
 
         PCars2_UDP uDP;           //Create an UDP object that will retrieve telemetry values from in game.
         private IProfileManager controller;
+        private IMainFormDispatcher dispatcher;
+        private string _DefaultProfile => Resources.profile;
 
         public LedEffect DefaultLED() {
             return new LedEffect(
@@ -49,19 +51,8 @@ namespace YawVR_Game_Engine.Plugin
                 },
            36f);
         }
-        public List<Profile_Component> DefaultProfile() {
-            return new List<Profile_Component>() {
-                new Profile_Component(0,0, 1.0f,1.0f,0f,false,false,-1f,1f),
-                new Profile_Component(1,1, 1.0f,1.0f,0f,false,true,-1f,1f),
-                new Profile_Component(2,2, 1.0f,1.0f,0f,false,true,-1f,1f),
+        public List<Profile_Component> DefaultProfile() => dispatcher.JsonToComponents(_DefaultProfile);
 
-                new Profile_Component(5,1, 1f,1f,0f,false,false,-1f,1f,true,null,new ProfileSpikeflatter(true,100,0.001f)),
-                new Profile_Component(6,2, 1f,1f,0f,false,true,-1f,1f),
-
-                new Profile_Component(0,4, 17.0f,17.0f,0f,true,false,-1f,1f),
-                new Profile_Component(3,3, 40.0f,40.0f,0f,false,false,-1f,1f),
-            };
-        }
         public void PatchGame()
         {
             return;
@@ -105,45 +96,50 @@ namespace YawVR_Game_Engine.Plugin
             while (!stop) {
                 uDP.readPackets();                      //Read Packets ever loop iteration
 
-                if (Math.Abs(uDP.LocalVelocity[2] - previousSpeed) > 8) {
-                    crash = (float)(Math.Sign(uDP.LocalVelocity[2] - previousSpeed)) * 10f;
+                if (uDP.GameState == 2)
+                {
+
+                    if (Math.Abs(uDP.LocalVelocity[2] - previousSpeed) > 8)
+                    {
+                        crash = (float)(Math.Sign(uDP.LocalVelocity[2] - previousSpeed)) * 10f;
+                    }
+                    crash = Lerp(crash, 0, 0.01f);
+                    if (Math.Abs(crash) < 1) crash = 0;
+
+                    controller.SetInput(0, uDP.Orientation[1] * 57.2957795f);
+                    controller.SetInput(1, uDP.Orientation[0] * 57.2957795f);
+                    controller.SetInput(2, uDP.Orientation[2] * 57.2957795f);
+                    if (uDP.MaxRpm != 0) controller.SetInput(3, (float)uDP.Rpm / (float)uDP.MaxRpm);
+                    controller.SetInput(4, uDP.Speed);
+
+                    controller.SetInput(5, uDP.LocalAcceleration[2]);
+                    controller.SetInput(6, uDP.LocalAcceleration[0]);
+
+                    controller.SetInput(7, uDP.Throttle);
+                    controller.SetInput(8, uDP.Brake);
+
+                    controller.SetInput(9, uDP.LocalVelocity[0]);
+                    controller.SetInput(10, uDP.LocalVelocity[1]);
+                    controller.SetInput(11, uDP.LocalVelocity[2]);
+
+                    controller.SetInput(12, uDP.AngularVelocity[0]);
+                    controller.SetInput(13, uDP.AngularVelocity[1]);
+                    controller.SetInput(14, uDP.AngularVelocity[2]);
+
+
+                    controller.SetInput(15, uDP.SuspensionVelocity[0]);
+                    controller.SetInput(16, uDP.SuspensionVelocity[1]);
+                    controller.SetInput(17, uDP.SuspensionVelocity[2]);
+                    controller.SetInput(18, uDP.SuspensionVelocity[3]);
+
+                    controller.SetInput(19, crash);
+                    float x = uDP.LocalAcceleration[2];
+
+                    // controller.SetInput(20, x * (10/(x/10)));
+                    //     controller.SetInput(20, currentPitchacc);
+
+                    previousSpeed = uDP.LocalVelocity[2];
                 }
-                crash = Lerp(crash, 0, 0.01f);
-                if (Math.Abs(crash) < 1) crash = 0;
-
-                controller.SetInput(0, uDP.Orientation[1] * 57.2957795f);
-                controller.SetInput(1, uDP.Orientation[0] * 57.2957795f);
-                controller.SetInput(2, uDP.Orientation[2] * 57.2957795f);
-                if (uDP.MaxRpm != 0) controller.SetInput(3, (float)uDP.Rpm / (float)uDP.MaxRpm);
-                controller.SetInput(4, uDP.Speed);
-
-                controller.SetInput(5, uDP.LocalAcceleration[2]);
-                controller.SetInput(6, uDP.LocalAcceleration[0]);
-
-                controller.SetInput(7, uDP.Throttle);
-                controller.SetInput(8, uDP.Brake);
-
-                controller.SetInput(9, uDP.LocalVelocity[0]);
-                controller.SetInput(10, uDP.LocalVelocity[1]);
-                controller.SetInput(11, uDP.LocalVelocity[2]);
-
-                controller.SetInput(12, uDP.AngularVelocity[0]);
-                controller.SetInput(13, uDP.AngularVelocity[1]);
-                controller.SetInput(14, uDP.AngularVelocity[2]);
-
-
-                controller.SetInput(15, uDP.SuspensionVelocity[0]);
-                controller.SetInput(16, uDP.SuspensionVelocity[1]);
-                controller.SetInput(17, uDP.SuspensionVelocity[2]);
-                controller.SetInput(18, uDP.SuspensionVelocity[3]);
-
-                controller.SetInput(19, crash);
-                float x = uDP.LocalAcceleration[2];
-
-                // controller.SetInput(20, x * (10/(x/10)));
-                //     controller.SetInput(20, currentPitchacc);
-
-                previousSpeed = uDP.LocalVelocity[2];
             }
         }
       
