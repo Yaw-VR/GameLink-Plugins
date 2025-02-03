@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="defaultProfile" xml:space="preserve">
+    <value>{
+    "GameName": "Ace Combat 7",
+    "Name": "Default",
+    "Components": [
+        {
+            "Constant": false,
+            "Input_index": 6,
+            "Output_index": 0,
+            "MultiplierPos": 1.0,
+            "MultiplierNeg": 1.0,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 1,
+            "Output_index": 1,
+            "MultiplierPos": 0.7,
+            "MultiplierNeg": 0.4,
+            "Offset": 0.0,
+            "Inverse": true,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 5,
+            "Output_index": 2,
+            "MultiplierPos": 0.2,
+            "MultiplierNeg": 0.2,
+            "Offset": 0.0,
+            "Inverse": true,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 3,
+            "Output_index": 3,
+            "MultiplierPos": 100.0,
+            "MultiplierNeg": 100.0,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": true,
+            "Input_index": 8,
+            "Output_index": 4,
+            "MultiplierPos": 30.0,
+            "MultiplierNeg": 30.0,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }
+    ],
+    "Effects": {
+        "EffectID": 0,
+        "InputID": 0,
+        "Multiplier": 0.0,
+        "Colors": [
+            {
+                "R": 216,
+                "G": 206,
+                "B": 112
+            },
+            {
+                "R": 2,
+                "G": 71,
+                "B": 225
+            },
+            {
+                "R": 44,
+                "G": 130,
+                "B": 192
+            },
+            {
+                "R": 10,
+                "G": 9,
+                "B": 235
+            }
+        ]
+    },
+    "Functions": []
+}</value>
+  </data>
+  <data name="desc" xml:space="preserve">
+    <value>&lt;h1&gt;UEVR Installation Guide&lt;/h1&gt;
+&lt;h2&gt;Installation Steps&lt;/h2&gt;
+&lt;ol&gt;
+    &lt;li&gt;Download &lt;a href="https://github.com/praydog/UEVR-nightly/releases" target="_blank"&gt;the latest UEVR Nightly version&lt;/a&gt; and extract it to any location.&lt;/li&gt;
+    &lt;li&gt;Download UESS from &lt;a href="https://www.nexusmods.com/acecombat7skiesunknown/mods/2474?tab=files" target="_blank"&gt;this link&lt;/a&gt; and extract the files into the game folder located at "...\common\ACE COMBAT 7".&lt;/li&gt;
+    &lt;li&gt;Create the following directories:
+        &lt;ul&gt;
+            &lt;li&gt;"ACE COMBAT 7\Game\Content\Paks\LogicMods"&lt;/li&gt;
+            &lt;li&gt;"ACE COMBAT 7\Game\Content\Paks\~LogicMods"&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Download this mod from Nexus Mods: &lt;a href="https://www.nexusmods.com/acecombat7skiesunknown/mods/2387" target="_blank"&gt;UEVR Compatibility Mod&lt;/a&gt;.&lt;/li&gt;
+    &lt;li&gt;Extract the file "UEVR_Compatibility_Mod_P.pak" into "ACE COMBAT 7\Game\Content\Paks\~LogicMods".&lt;/li&gt;
+    &lt;li&gt;Download the UEVR Profile from &lt;a href="https://github.com/McFredward/ace-combat-uevr/releases" target="_blank"&gt;this GitHub repository&lt;/a&gt;.&lt;/li&gt;
+    &lt;li&gt;Launch UEVR and import the UEVR profile "Ace7Game.zip" using the "Import Config" option.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;Important Warnings&lt;/h2&gt;
+&lt;p style="color: red; font-weight: bold;"&gt;
+    Warning: UEVR requires a very powerful gaming PC! The motion may lag even if the game itself runs smoothly. 
+    It is highly recommended to set the in-game graphics settings to medium to ensure optimal performance.
+&lt;/p&gt;
+&lt;p&gt;
+    Note: Even with my RTX 4090 and AMD Ryzen 7 7800X3D, I had to set the graphics to medium for smooth operation.
+&lt;/p&gt;
+
+&lt;h2&gt;Starting the Game&lt;/h2&gt;
+&lt;ol&gt;
+    &lt;li&gt;Start UEVR.&lt;/li&gt;
+    &lt;li&gt;Launch the YawVR Game Engine.&lt;/li&gt;
+    &lt;li&gt;Select the Ace Combat 7 profile and start it.&lt;/li&gt;
+    &lt;li&gt;Launch Ace Combat 7.&lt;/li&gt;
+    &lt;li&gt;Choose "Ace Combat 7" in the dropdown menu in UEVR and press "Inject".&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Made by McFredward based on the great work of keton, kosnag &amp; praydog&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/McFredward/ace-combat-uevr" target="_blank"&gt;Sourcecode&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Happy Yaw'ing!&lt;/p&gt;</value>
+  </data>
+</root>
