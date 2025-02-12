@@ -18,11 +18,11 @@ namespace YawVR_Game_Engine.Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Overload")]
-    [ExportMetadata("Version", "1.2")]
+    [ExportMetadata("Version", "1.3")]
     class OverloadPlugin : Game 
     {
         #region Standard Plugin Properties
-        public string PROCESS_NAME => "";
+        public string PROCESS_NAME => "olmod";
         public int STEAM_ID => 0;
         public bool PATCH_AVAILABLE => false;
         public string AUTHOR => "PhunkaeG, Trevor Jones (Drowhunter)";
