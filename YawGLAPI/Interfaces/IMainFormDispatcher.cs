@@ -6,7 +6,7 @@ namespace YawGLAPI
     public interface IMainFormDispatcher
     {
 
-
+        public IDeviceParameters GetDeviceParameters();
         public string GetLanguage();
         public void ShowNotification(NotificationType type, string text);
         public void DialogShow(string _string, DIALOG_TYPE type, Action<bool> _yes = null, Action<bool> _no = null, bool showChk = false, bool chkDefault = false,string chkText = "");
