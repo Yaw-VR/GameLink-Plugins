@@ -18,7 +18,7 @@ namespace YawVR_Game_Engine.Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Distance")]
-    [ExportMetadata("Version", "1.0")]
+    [ExportMetadata("Version", "1.1")]
 
     public class DistancePlugin : Game
     {
@@ -42,8 +42,9 @@ namespace YawVR_Game_Engine.Plugin
         public Stream Background => ResourceHelper.GetStream("wide.png");
         private string defProfile => ResourceHelper.GetString("Default.yawglprofile");
 
+        private IDeviceParameters deviceParameters;
 
-
+        public Dictionary<string, ParameterInfo[]> GetFeatures() => null;
 
         public void Exit()
         {
@@ -69,6 +70,7 @@ namespace YawVR_Game_Engine.Plugin
 
         public void Init()
         {
+            deviceParameters = dispatcher.GetDeviceParameters();
             running = true;
             readThread = new Thread(new ThreadStart(ReadThread));
             readThread.Start();
@@ -103,17 +105,29 @@ namespace YawVR_Game_Engine.Plugin
                             {
                                 if (key == "Pitch" || key == "Roll")
                                 {
-                                    var v = 0f;
-                                    if (Math.Abs(value) <= 90)
-                                    {
-                                        v = value;
-                                    }
-                                    else
-                                    {
-                                        v = (180 - Math.Abs(value)) * (value < 0 ? -1 : 1);
-                                    }
-                                    var max = 90;
-                                    var nv = (float)EnsureMapRange(v, -90, 90, -max, max);
+                                    var nv = value;
+
+                                    //var v = 0f;
+                                    //if (MathF.Abs(value) <= 90)
+                                    //{
+                                    //    v = value;
+                                    //}
+                                    //else
+                                    //{
+                                    //    v = MathF.CopySign(180 - MathF.Abs(value), value);
+                                    //}
+                                    
+
+                                    //if (key == "Pitch")
+                                    //{
+                                    //    nv = ScalePitchRoll(value, deviceParameters.PitchLimitF, deviceParameters.PitchLimitB);
+                                    //}
+                                    //else if (key == "Roll")
+                                    //{
+                                    //   nv = ScalePitchRoll(value, deviceParameters.RollLimit, deviceParameters.RollLimit);
+
+                                    //}
+
                                     controller.SetInput(i, nv);
                                     continue;
                                 }
@@ -139,19 +153,15 @@ namespace YawVR_Game_Engine.Plugin
 
         bool isRestting = false;
 
-
-
-        public Dictionary<string, ParameterInfo[]> GetFeatures() => null;
-
-        public static double MapRange(double x, double xMin, double xMax, double yMin, double yMax)
+        private float ScalePitchRoll(float value, float fwMax,  float bkMax)
         {
-            return yMin + (yMax - yMin) * (x - xMin) / (xMax - xMin);
+            return MathsF.EnsureMapRange(value, 0, MathF.CopySign(90, value), 0, value < 0 ? fwMax: bkMax);            
         }
 
-        public static double EnsureMapRange(double x, double xMin, double xMax, double yMin, double yMax)
-        {
-            return Math.Max(Math.Min(MapRange(x, xMin, xMax, yMin, yMax), Math.Max(yMin, yMax)), Math.Min(yMin, yMax));
-        }
+
+        
+
+        
     }
 
     static class Extensions
