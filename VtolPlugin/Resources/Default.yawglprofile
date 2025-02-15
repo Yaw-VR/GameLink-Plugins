@@ -1,0 +1,96 @@
+{
+  "gameName": "VTOL VR",
+  "Name": "Default",
+  "components": [
+    {
+      "Constant": false,
+      "Input_index": 0,
+      "Output_index": 0,
+      "MultiplierPos": 1.0,
+      "MultiplierNeg": 1.0,
+      "Offset": 0.0,
+      "Inverse": true,
+      "Limit": -1.0,
+      "Smoothing": 1.0,
+      "Enabled": true,
+      "Spikeflatter": {
+        "Enabled": false,
+        "Limit": 100.0,
+        "Strength": 0.5
+      },
+      "Deadzone": 0.0,
+      "Type": 0,
+      "Condition": [],
+      "Math": []
+    },
+    {
+      "Constant": false,
+      "Input_index": 1,
+      "Output_index": 1,
+      "MultiplierPos": 1.0,
+      "MultiplierNeg": 1.0,
+      "Offset": 0.0,
+      "Inverse": false,
+      "Limit": -1.0,
+      "Smoothing": 1.0,
+      "Enabled": true,
+      "Spikeflatter": {
+        "Enabled": false,
+        "Limit": 100.0,
+        "Strength": 0.5
+      },
+      "Deadzone": 0.0,
+      "Type": 0,
+      "Condition": [],
+      "Math": []
+    },
+    {
+      "Constant": false,
+      "Input_index": 2,
+      "Output_index": 2,
+      "MultiplierPos": 1.0,
+      "MultiplierNeg": 1.0,
+      "Offset": 0.0,
+      "Inverse": true,
+      "Limit": -1.0,
+      "Smoothing": 1.0,
+      "Enabled": true,
+      "Spikeflatter": {
+        "Enabled": false,
+        "Limit": 100.0,
+        "Strength": 0.5
+      },
+      "Deadzone": 0.0,
+      "Type": 0,
+      "Condition": [],
+      "Math": []
+    }
+  ],
+  "effects": {
+    "EffectID": 0,
+    "InputID": 3,
+    "Multiplier": 0.7,
+    "Colors": [
+      {
+        "R": 66,
+        "G": 135,
+        "B": 245
+      },
+      {
+        "R": 80,
+        "G": 80,
+        "B": 80
+      },
+      {
+        "R": 128,
+        "G": 3,
+        "B": 117
+      },
+      {
+        "R": 110,
+        "G": 201,
+        "B": 12
+      }
+    ]
+  }
+}

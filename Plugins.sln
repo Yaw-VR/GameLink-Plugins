@@ -378,6 +378,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SharedLib\SharedLib.projitems*{4d31de79-3b0e-4caf-91ab-f3acfbbe5f9b}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{72d8c5ad-5439-4235-a355-a2546a509a05}*SharedItemsImports = 5
+		SharedLib\SharedLib.projitems*{75a5ac51-c340-4fbc-b93e-cc70b9771ff2}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{88c6fdd2-9cd4-4015-bb6c-3389c29003be}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{9dd14943-3f95-45c8-aace-0eb2582e47ef}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{a0988e26-18f3-4ae4-95df-3bd3b0abe37e}*SharedItemsImports = 13

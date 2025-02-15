@@ -1,4 +1,7 @@
 ﻿using Newtonsoft.Json;
+
+using SharedLib;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -8,14 +11,14 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using VtolPlugin.Properties;
 using YawGLAPI;
 
 namespace YawVR_Game_Engine
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "VTOL VR")]
-    [ExportMetadata("Version", "1.0")]
+    [ExportMetadata("Version", "2.0")]
+    [ExportMetadata("Description", "Updated for VTOL VR Mod Loader that is now located in Steam. Patching is now done via a subscription to a mod within Mod Loader.")]
 
     public class VtolPlugin : Game {
 
@@ -30,23 +33,21 @@ namespace YawVR_Game_Engine
 
         public string AUTHOR => "YawVR";
         public bool PATCH_AVAILABLE => true;
-        public int STEAM_ID => 667970;
+        public int STEAM_ID => 3018410;
         public string PROCESS_NAME => string.Empty;
 
 
-        public string Description => Resources.description;
+        public string Description => ResourceHelper.GetString("description.html");
 
-        public Stream Logo => GetStream("logo.png");
-        public Stream SmallLogo => GetStream("recent.png");
-        public Stream Background => GetStream("wide.png");
+        public Stream Logo => ResourceHelper.GetStream("logo.png");
+        public Stream SmallLogo => ResourceHelper.GetStream("recent.png");
+        public Stream Background => ResourceHelper.GetStream("wide.png");
 
-        public LedEffect DefaultLED() {
-            return dispatcher.JsonToLED(Resources.defProfile);
-        }
+        private string defProfilejson => ResourceHelper.GetString("Default.yawglprofile");
 
-        public List<Profile_Component> DefaultProfile() {
-            return dispatcher.JsonToComponents(Resources.defProfile);
-        }
+        public LedEffect DefaultLED() => dispatcher.JsonToLED(defProfilejson);
+        public List<Profile_Component> DefaultProfile() => dispatcher.JsonToComponents(defProfilejson);
+        
 
         public void Exit() {
             receivingUdpClient.Close();
@@ -59,10 +60,7 @@ namespace YawVR_Game_Engine
                 "Yaw","Pitch","Roll","Xacceleration","Yacceleration","Zacceleration","AirSpeed","VerticalSpeed","AoA"
             };
         }
-        public string GetDescription()
-        {
-            return Resources.description;
-        }
+        
         public void SetReferences(IProfileManager controller, IMainFormDispatcher dispatcher)
         {
             this.controller = controller;
@@ -107,42 +105,16 @@ namespace YawVR_Game_Engine
         }
 
 
-        Stream GetStream(string resourceName)
-        {
-            var assembly = GetType().Assembly;
-            var rr = assembly.GetManifestResourceNames();
-            string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
-            return assembly.GetManifestResourceStream(fullResourceName);
-        }
-
         public void PatchGame() {
-            string name = "Vtol VR";
-            string installPath = dispatcher.GetInstallPath(name);
-            Console.WriteLine(installPath);
-            if (!Directory.Exists(installPath)) {
-                dispatcher.DialogShow("Cant find Vtol VR install directory\nOpen Plugin manager?", DIALOG_TYPE.QUESTION, delegate {
-                    dispatcher.OpenPluginManager();
-                });
-                return;
-            }
-
-            try {
-                string tempPath = Path.GetTempFileName();
-                     
-                using (WebClient wc = new WebClient()) {
-                    wc.DownloadFile("http://yaw.one/gameengine/Plugins/VTOL_VR/VTOLVR_ModLoader.zip", tempPath);
-                    Console.WriteLine(name , installPath);
-                    dispatcher.ExtractToDirectory(tempPath, installPath,true);
-                }
-            }
-            catch (Exception e) {
-
-                Console.WriteLine(e.Message);
-            }
-
-
-
-
+            this.dispatcher.DialogShow(
+                "VTOL VR Telemetry Mod is now managed through the VTOL VR Mod Loader Workshop.\n\nTo install the telemetry mod, subscribe to the telemetry mod via VTOL VR Mod Loader Workshop.\n\nIt will automatically be added to Mod Loader Content.",
+                DIALOG_TYPE.INFO,
+                null,
+                null,
+                false,
+                false,
+                ""
+            );
         }
         
      
