@@ -9,6 +9,7 @@
     <Import_RootNamespace>SharedLib</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)MathsF.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ResourceHelper.cs" />
   </ItemGroup>
 </Project>
