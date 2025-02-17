@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -53,8 +54,11 @@ namespace YawGLAPI
         /// </summary>
         public abstract Dictionary<string, ParameterInfo[]> GetFeatures();
 
-
-         
+        /// <summary>
+        /// Fetch ConfigBody of the plugin. Only struct is allowed, with primitive type fields ( and string )
+        /// </summary>
+        /// <returns></returns>
+        public abstract Type GetConfigBody();
 
         /// <summary>
         /// Do neccessary configuration for the game to work

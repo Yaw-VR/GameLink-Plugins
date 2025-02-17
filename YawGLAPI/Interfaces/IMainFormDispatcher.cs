@@ -25,5 +25,7 @@ namespace YawGLAPI
         public List<Profile_Component> JsonToComponents(string json);
         public LedEffect JsonToLED(string json);
 
+        public T GetConfigObject<T>();
+
     }
 }
