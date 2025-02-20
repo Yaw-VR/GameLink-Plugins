@@ -59,20 +59,20 @@ namespace YawVR_Game_Engine.Plugin
 
         public string[] GetInputData() => InputHelper.GetInputs<DistanceTelemetryData>(default).Select(_ => _.key).ToArray();
 
-        public LedEffect DefaultLED() => new (EFFECT_TYPE.KNIGHT_RIDER, 0, [ YawColor.WHITE ], 0); 
+        public LedEffect DefaultLED() => new(EFFECT_TYPE.KNIGHT_RIDER, 0, [YawColor.WHITE], 0);
         public List<Profile_Component> DefaultProfile() => dispatcher.JsonToComponents(defProfile);
-            
-        
+
+
         public void SetReferences(IProfileManager controller, IMainFormDispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
             this.controller = controller;
         }
 
-        
+
         public void Init()
         {
-            deviceParameters =  dispatcher.GetDeviceParameters();
+            deviceParameters = dispatcher.GetDeviceParameters();
             running = true;
             readThread = new Thread(new ThreadStart(ReadThread));
             readThread.Start();
@@ -85,9 +85,9 @@ namespace YawVR_Game_Engine.Plugin
                 {
                     ReceiveAddress = new IPEndPoint(IPAddress.Any, 12345)
                 });
-            
+
             }
-            catch(Exception x)
+            catch (Exception x)
             {
                 dispatcher.ShowNotification(NotificationType.ERROR, x.Message);
                 Exit();
@@ -134,9 +134,9 @@ namespace YawVR_Game_Engine.Plugin
                         isRestting = true;
                     }
                 }
-                catch(SocketException) { }
+                catch (SocketException) { }
             }
-            
+
         }
 
         bool isRestting = false;
@@ -144,12 +144,6 @@ namespace YawVR_Game_Engine.Plugin
 
 
         public Dictionary<string, ParameterInfo[]> GetFeatures() => null;
-
-
-        public static double EnsureMapRange(double x, double xMin, double xMax, double yMin, double yMax)
-        {
-            return Math.Max(Math.Min(MapRange(x, xMin, xMax, yMin, yMax), Math.Max(yMin, yMax)), Math.Min(yMin, yMax));
-        }
 
         public Type GetConfigBody()
         {
@@ -159,7 +153,7 @@ namespace YawVR_Game_Engine.Plugin
 
     static class Extensions
     {
-        
+
 
         public static IEnumerable<(int index, T value)> WithIndex<T>(this IEnumerable<T> source)
         {
