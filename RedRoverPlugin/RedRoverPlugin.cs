@@ -1,5 +1,6 @@
 ﻿
 using RedRoverPlugin.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -11,7 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using YawGLAPI;
 
-namespace YawVR_Game_Engine.Plugin
+namespace RedRoverPlugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Red Rover")]
@@ -132,6 +133,11 @@ namespace YawVR_Game_Engine.Plugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return null;
         }
     }
 }

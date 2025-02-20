@@ -124,18 +124,11 @@ namespace YawVR_Game_Engine.Plugin
             Console.Write(message);
         }
 
-        void AskForPort()
-        {
-            if (!int.TryParse(Interaction.InputBox("Enter the incoming data port.\n (Default 20777)", "Endpoint", "20777"), out gameport)
-                || gameport < 0 || gameport > 65535)
-            {
-                gameport = 20777;
-            }
-        }
 
         public void Init()
         {
-            AskForPort();
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            gameport = pConfig.Port;
 
             bool error = false;
             do
@@ -334,7 +327,9 @@ namespace YawVR_Game_Engine.Plugin
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\My Games\Test Drive Unlimited Solar Crown\UserSettings.cfg";
             if (File.Exists(path))
             {
-                AskForPort();
+                var pConfig = dispatcher.GetConfigObject<Config>();
+                gameport = pConfig.Port;
+               
 
                 string input = File.ReadAllText(path);
                 string contents = Regex.Replace(input, @"(?<=Rc2\.Telemetry\.EnableTelemetry\s*?=\s*?)false", "true", RegexOptions.Singleline);
@@ -358,6 +353,11 @@ namespace YawVR_Game_Engine.Plugin
             {
                 socket = null;                
             }
+        }
+
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
         }
     }
 }

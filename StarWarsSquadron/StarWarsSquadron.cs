@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using YawGLAPI;
-namespace YawVR_Game_Engine.Plugin
+namespace StarWarsSquadron
 {
 
 
@@ -384,6 +384,11 @@ namespace YawVR_Game_Engine.Plugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return null;
         }
     }
 }

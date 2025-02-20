@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using Vector36Plugin.Properties;
 using YawGLAPI;
-namespace YawVR_Game_Engine.Plugin
+namespace Vector36Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Vector36")]
@@ -85,8 +85,9 @@ namespace YawVR_Game_Engine.Plugin
         }
 
         public void Init() {
-           
-            receivingUdp = new UdpClient(4123);
+
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            receivingUdp = new UdpClient(pConfig.Port);
             readthread = new Thread(new ThreadStart(ReadFunction));
             readthread.Start();
         }
@@ -132,9 +133,10 @@ namespace YawVR_Game_Engine.Plugin
             Console.WriteLine("Vector36 path is {0} ", installPath);
             if (File.Exists(installPath + "/Vector36.exe")) {
                 try {
+                    var pConfig = dispatcher.GetConfigObject<Config>();
                     using (StreamWriter streamWriter = new StreamWriter(installPath + "\\Vector36_Data\\StreamingAssets\\telemetry.cfg")) {
                         streamWriter.WriteLine("127.0.0.1");
-                        streamWriter.WriteLine("4123");
+                        streamWriter.WriteLine(pConfig.Port);
                     }
 
                     dispatcher.ShowNotification(NotificationType.INFO, "Vector36 patched!");
@@ -161,6 +163,11 @@ namespace YawVR_Game_Engine.Plugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
         }
     }
 }

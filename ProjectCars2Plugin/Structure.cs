@@ -4,7 +4,8 @@ using System.Net;
 using System.Net.Sockets;
 
 
-namespace YawVR_Game_Engine.Plugin {
+namespace ProjectCars2Plugin
+ {
 
     class PCars2_UDP {
 

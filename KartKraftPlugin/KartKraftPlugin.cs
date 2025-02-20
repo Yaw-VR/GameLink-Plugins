@@ -1,5 +1,6 @@
 ﻿using FlatBuffers;
 using KartKraft;
+using KartKraftPlugin;
 using KartKraftPlugin.Properties;
 using System;
 using System.Collections.Generic;
@@ -80,10 +81,10 @@ namespace YawVR_Game_Engine.Plugin
         }
         public void Init()
         {
-
             try
             {
-                udpClient = new UdpClient(5000);
+                var pConfig = dispatcher.GetConfigObject<Config>();
+                udpClient = new UdpClient(pConfig.Port);
                 udpClient.Client.ReceiveTimeout = 5000;
                 running = true;
                 ReadThread = new Thread(new ThreadStart(ReadFunction));
@@ -165,6 +166,11 @@ namespace YawVR_Game_Engine.Plugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
         }
     }
 }

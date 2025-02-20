@@ -9,7 +9,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading;
 using YawGLAPI;
-namespace YawVR_Game_Engine.Plugin
+namespace SubnauticaPlugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Subnautica")]
@@ -171,5 +171,9 @@ namespace YawVR_Game_Engine.Plugin
             return assembly.GetManifestResourceStream(fullResourceName);
         }
 
+        public Type GetConfigBody()
+        {
+            return null;
+        }
     }
 }

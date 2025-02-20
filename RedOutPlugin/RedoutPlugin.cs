@@ -9,33 +9,13 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using YawGLAPI;
 
-namespace YawVR_Game_Engine.Plugin {
+namespace RedOutPlugin
+{
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Redout")]
     [ExportMetadata("Version", "1.0")]
 
-    public class RedoutPlugin : Game {
-
-
-        [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Unicode)]
-        [Serializable]
-        public struct Packet {
-            public float QuatX;
-            public float QuatY;
-            public float QuatZ;
-            public float QuatW;
-
-            public float AccWorldX;
-            public float AccWorldY;
-            public float AccWorldZ;
-
-            public float AccX;
-            public float AccY;
-            public float AccZ;
-
-            
-        }
-        
+    public class RedoutPlugin : Game {  
 
         private MemoryMappedFile mmf;
         private Thread readThread;
@@ -123,7 +103,7 @@ namespace YawVR_Game_Engine.Plugin {
             }
         }
 
-        public Packet ReadPacket() {
+        internal Packet ReadPacket() {
             using (var stream = mmf.CreateViewStream()) {
                 using (var reader = new BinaryReader(stream)) {
                     var size = Marshal.SizeOf(typeof(Packet));
@@ -170,6 +150,11 @@ namespace YawVR_Game_Engine.Plugin {
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return null;
         }
     }
 }

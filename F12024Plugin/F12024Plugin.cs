@@ -87,7 +87,9 @@ namespace F12024Plugin
 
         public void Init()
         {
-            client = new TelemetryClient(20777);
+
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            client = new TelemetryClient(pConfig.Port);
 
             client.OnCarTelemetryDataReceive += Client_OnCarTelemetryDataReceive;
             client.OnMotionDataReceive += Client_OnMotionDataReceive;
@@ -158,6 +160,11 @@ namespace F12024Plugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
         }
     }
 }

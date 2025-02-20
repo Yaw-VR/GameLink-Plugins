@@ -10,7 +10,7 @@ using System.Threading;
 using XPlane11Plugin.Properties;
 using YawGLAPI;
 
-namespace YawVR_Game_Engine.Plugin
+namespace XPlane11Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "X-Plane 11")]
@@ -95,9 +95,10 @@ namespace YawVR_Game_Engine.Plugin
 
         public void Init() {
 
+            var pConfig = dispatcher.GetConfigObject<Config>();
             Console.WriteLine("XPLANE11 INIT");
             running = true;
-            udpClient = new UdpClient(4123);
+            udpClient = new UdpClient(pConfig.Port);
             udpClient.Client.ReceiveTimeout = 5000;
             readThread = new Thread(new ThreadStart(ReadFunction));
 
@@ -272,6 +273,11 @@ namespace YawVR_Game_Engine.Plugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
         }
     }
 }

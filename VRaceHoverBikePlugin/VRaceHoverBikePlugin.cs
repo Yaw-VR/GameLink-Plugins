@@ -11,7 +11,7 @@ using System.Threading;
 using VRaceHoverBikePlugin.Properties;
 using YawGLAPI;
 
-namespace YawVR_Game_Engine.Plugin
+namespace VRaceHoverBikePlugin
 {
 
 
@@ -21,12 +21,10 @@ namespace YawVR_Game_Engine.Plugin
     
 
     public class VRaceHoverBikePlugin : Game {
-        private static int Port = 8051;
         private UdpClient udpClient;
         private Thread readThread;
         private bool stopThread;
         private IPEndPoint remotepoint;
-        static string json = "{ \"ip\":\"127.0.0.1\", \"port\": 8051, \"refreshRate\":20 }";
         private IMainFormDispatcher dispatcher;
         private IProfileManager controller;
         public bool PATCH_AVAILABLE => true;
@@ -97,7 +95,9 @@ namespace YawVR_Game_Engine.Plugin
         }
 
         private void ReadFunction() {
-            udpClient = new UdpClient(Port);
+
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            udpClient = new UdpClient(pConfig.Port);
             FieldInfo[] fields = typeof(TelemetryData).GetFields();
      
             while (!stopThread) {
@@ -127,6 +127,8 @@ namespace YawVR_Game_Engine.Plugin
                 Console.WriteLine(Directory.Exists(folder));
                 
                 using (StreamWriter sr = new StreamWriter(folder + "/telemetry.json")) {
+                    var pConfig = dispatcher.GetConfigObject<Config>();
+                    string json = "{ \"ip\":\"127.0.0.1\", \"port\": "+pConfig+", \"refreshRate\":"+pConfig.RefreshRate+" }";
                     sr.WriteLine(json);
                 }
             }
@@ -172,6 +174,11 @@ namespace YawVR_Game_Engine.Plugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
         }
     }
 }

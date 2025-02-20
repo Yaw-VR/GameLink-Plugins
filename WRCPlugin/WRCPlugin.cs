@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
@@ -9,10 +12,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using WRCPlugin.Properties;
 using YawGLAPI;
-using Newtonsoft;
-using Newtonsoft.Json.Linq;
-using System.Linq;
-using Newtonsoft.Json;
 namespace WRCPlugin
 {
     [Export(typeof(Game))]
@@ -81,8 +80,10 @@ namespace WRCPlugin
 
         public void Init()
         {
+
+            var pConfig = dispatcher.GetConfigObject<Config>();
             running = true;
-            receivingUdpClient = new UdpClient(20777);
+            receivingUdpClient = new UdpClient(pConfig.Port);
             readThread = new Thread(new ThreadStart(ReadFunction));
             readThread.Start();
         }
@@ -212,6 +213,11 @@ namespace WRCPlugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
         }
     }
 }

@@ -126,5 +126,9 @@ namespace YawVR_Game_Engine
             return assembly.GetManifestResourceStream(fullResourceName);
         }
 
+        public Type GetConfigBody()
+        {
+            return null;
+        }
     }
 }

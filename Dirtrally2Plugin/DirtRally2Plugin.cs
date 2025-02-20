@@ -10,7 +10,7 @@ using System.Threading;
 using System.Xml;
 using YawGLAPI;
 
-namespace YawVR_Game_Engine.Plugin
+namespace Dirtrally2Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Dirt Rally 2")]
@@ -65,7 +65,8 @@ namespace YawVR_Game_Engine.Plugin
             this.dispatcher = dispatcher;
         }
         public void Init() {
-            udpClient = new UdpClient(20777);
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            udpClient = new UdpClient(pConfig.Port);
             udpClient.Client.ReceiveTimeout = 2000;
             running = true;
             readThread = new Thread(new ThreadStart(ReadFunction));
@@ -191,6 +192,9 @@ namespace YawVR_Game_Engine.Plugin
             return assembly.GetManifestResourceStream(fullResourceName);
         }
 
-
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
+        }
     }
 }

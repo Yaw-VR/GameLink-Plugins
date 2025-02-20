@@ -283,5 +283,10 @@ namespace YawVR_Game_Engine.Plugin
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
         }
+
+        public Type GetConfigBody()
+        {
+            return null;
+        }
     }
 }

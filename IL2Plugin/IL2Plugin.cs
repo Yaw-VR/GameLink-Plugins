@@ -1,4 +1,5 @@
-﻿using IL2Plugin.Properties;
+﻿using IL2Plugin;
+using IL2Plugin.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -70,7 +71,7 @@ namespace YawVR_Game_Engine.Plugin {
 
         public string[] GetInputData() {
             return new string[] {
-                "Yaw","Ppitch","Roll","Velocity_X","Velocity_Y","Velocity_Z","Acceleration_X","Acceleration_Y","Acceleration_Z"
+                "Yaw","Pitch","Roll","Velocity_X","Velocity_Y","Velocity_Z","Acceleration_X","Acceleration_Y","Acceleration_Z"
             };
         }
 
@@ -82,7 +83,8 @@ namespace YawVR_Game_Engine.Plugin {
         public void Init() {
             Console.WriteLine("IL2 INIT");
             stop = false;
-            udpClient = new UdpClient(4321);
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            udpClient = new UdpClient(pConfig.Port);
             readThread = new Thread(new ThreadStart(ReadFunction));
             readThread.Start();
 
@@ -157,6 +159,11 @@ namespace YawVR_Game_Engine.Plugin {
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
         }
     }
 

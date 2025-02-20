@@ -9,7 +9,7 @@ using System.Threading;
 using TheCrew2.Properties;
 using YawGLAPI;
 
-namespace YawVRYawVR_Game_Engine.Plugin
+namespace TheCrew2
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "The Crew 2")]
@@ -85,8 +85,11 @@ namespace YawVRYawVR_Game_Engine.Plugin
         }
 
         public void Init() {
+
+            var pConfig = dispatcher.GetConfigObject<Config>();
+
             running = true;
-            receivingUdpClient = new UdpClient(1337);
+            receivingUdpClient = new UdpClient(pConfig.Port);
             readthread = new Thread(new ThreadStart(ReadFunction));
             readthread.Start();
         }
@@ -174,5 +177,9 @@ namespace YawVRYawVR_Game_Engine.Plugin
             return assembly.GetManifestResourceStream(fullResourceName);
         }
 
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
+        }
     }
 }

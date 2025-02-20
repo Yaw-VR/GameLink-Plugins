@@ -9,7 +9,8 @@ using System.Reflection;
 using System.Threading;
 using YawGLAPI;
 
-namespace YawVR_Game_Engine.Plugin {
+namespace ProjectCars3Plugin
+{
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Project Cars 3")]
     [ExportMetadata("Version", "1.0")]
@@ -88,9 +89,10 @@ namespace YawVR_Game_Engine.Plugin {
             Console.WriteLine("ProjectCars3 INIT");
             running = true;
 
-            listener = new UdpClient(5606);
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            listener = new UdpClient(pConfig.Port);
             listener.Client.ReceiveTimeout = 5000;
-            groupEP  = new IPEndPoint(IPAddress.Any, 5606);
+            groupEP  = new IPEndPoint(IPAddress.Any, pConfig.Port);
             uDP = new PCars2_UDP(listener, groupEP);
 
             readthread = new Thread(new ThreadStart(ReadFunction));
@@ -171,5 +173,9 @@ namespace YawVR_Game_Engine.Plugin {
             return assembly.GetManifestResourceStream(fullResourceName);
         }
 
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
+        }
     }
 }

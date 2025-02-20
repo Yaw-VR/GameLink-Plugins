@@ -8,7 +8,8 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Threading;
 using YawGLAPI;
-namespace YawVR_Game_Engine.Plugin {
+namespace LFSPlugin
+{
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Live For Speed")]
     [ExportMetadata("Version", "1.0")]
@@ -83,7 +84,10 @@ namespace YawVR_Game_Engine.Plugin {
         }
       
         public void Init() {
-            udpClient = new UdpClient(3156);
+
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            udpClient = new UdpClient(pConfig.Port);
+
             udpClient.Client.ReceiveTimeout = 5000;
             running = true;
             readThread = new Thread(new ThreadStart(ReadFunction));
@@ -144,5 +148,9 @@ namespace YawVR_Game_Engine.Plugin {
             return assembly.GetManifestResourceStream(fullResourceName);
         }
 
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
+        }
     }
 }

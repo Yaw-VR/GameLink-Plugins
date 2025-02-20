@@ -1,4 +1,5 @@
 ﻿using GravitreXPlugin.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -86,11 +87,13 @@ namespace GravitreXPlugin
 			running = true;
 			readThread = new Thread(() =>
 				{
-					var ep = new IPEndPoint(IPAddress.Parse("FF01::1"), 4123);
+
+					int port = dispatcher.GetConfigObject<Config>().Port;
+					var ep = new IPEndPoint(IPAddress.Parse("FF01::1"), port);
 					IPv6MulticastOption ipv6MulticastOption = new IPv6MulticastOption(ep.Address);
 					IPAddress group = ipv6MulticastOption.Group;
 					long interfaceIndex = ipv6MulticastOption.InterfaceIndex;
-					client = new UdpClient(4123, AddressFamily.InterNetworkV6);
+					client = new UdpClient(port, AddressFamily.InterNetworkV6);
 					client.JoinMulticastGroup((int)interfaceIndex, group);
 
 					while (running)
@@ -164,6 +167,11 @@ namespace GravitreXPlugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+			return typeof(Config);
         }
     }
 }

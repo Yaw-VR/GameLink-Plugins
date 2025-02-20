@@ -146,7 +146,15 @@ namespace YawVR_Game_Engine.Plugin
         public Dictionary<string, ParameterInfo[]> GetFeatures() => null;
 
 
-        
+        public static double EnsureMapRange(double x, double xMin, double xMax, double yMin, double yMax)
+        {
+            return Math.Max(Math.Min(MapRange(x, xMin, xMax, yMin, yMax), Math.Max(yMin, yMax)), Math.Min(yMin, yMax));
+        }
+
+        public Type GetConfigBody()
+        {
+            return null;
+        }
     }
 
     static class Extensions

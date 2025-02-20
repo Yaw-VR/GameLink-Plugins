@@ -15,22 +15,7 @@ namespace WarplanesWW1Plugin
     [ExportMetadata("Version","1.0")]
     public class WarplanesWW1Plugin : Game
     {
-        [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Unicode)]
-        [Serializable]
-        public struct Packet
-        {
-            public float Pitch;
-            public float Yaw;
-            public float Heave;
-            public float Roll;
-
-            public float Sway;
-            public float Surge;
-         
-
-
-        }
-
+       
 
         private MemoryMappedFile mmf;
         private IProfileManager controller;
@@ -129,7 +114,7 @@ namespace WarplanesWW1Plugin
             }
         }
 
-        public Packet ReadPacket()
+        private Packet ReadPacket()
         {
             using (var stream = mmf.CreateViewStream())
             {
@@ -191,6 +176,11 @@ namespace WarplanesWW1Plugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return null;
         }
     }
 }

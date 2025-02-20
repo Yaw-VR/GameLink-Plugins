@@ -1,4 +1,5 @@
-﻿using DCSPlugin.Properties;
+﻿using DCSPlugin;
+using DCSPlugin.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -25,7 +26,7 @@ namespace YawVR_Game_Engine.Plugin
         IPEndPoint remote = new IPEndPoint(IPAddress.Any, 41230);
 
         public int STEAM_ID => 223750;
-        public string PROCESS_NAME => string.Empty; // No need to wait for process
+        public string PROCESS_NAME => "DCS"; // No need to wait for process
         public bool PATCH_AVAILABLE => true;
         public string AUTHOR => "YawVR";
 
@@ -79,8 +80,8 @@ namespace YawVR_Game_Engine.Plugin
 
             Console.WriteLine("DCS INIT");
             stop = false;
-           
-            udpClient = new UdpClient(41230);
+            var config = dispatcher.GetConfigObject<Config>();
+            udpClient = new UdpClient(config.Port);
             readThread = new Thread(new ThreadStart(ReadFunction));
 
             readThread.Start();
@@ -209,5 +210,9 @@ namespace YawVR_Game_Engine.Plugin
             return assembly.GetManifestResourceStream(fullResourceName);
         }
 
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
+        }
     }
 }

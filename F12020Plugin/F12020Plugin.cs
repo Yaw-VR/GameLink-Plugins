@@ -1,5 +1,6 @@
 ﻿using Codemasters.F1_2020;
 using F12020Plugin.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -9,7 +10,7 @@ using System.Reflection;
 using System.Threading;
 using YawGLAPI;
 
-namespace YawVR_Game_Engine
+namespace F12020Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "F1 2020")]
@@ -82,7 +83,9 @@ namespace YawVR_Game_Engine
         public void Init()
         {
             if(fields == null) fields = typeof(MotionPacket).GetFields();
-            receivingUdp = new UdpClient(20777);
+
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            receivingUdp = new UdpClient(pConfig.Port);
             readthread = new Thread(new ThreadStart(ReadFunction));
             readthread.Start();
         }
@@ -163,8 +166,9 @@ namespace YawVR_Game_Engine
             return assembly.GetManifestResourceStream(fullResourceName);
         }
 
-
-
-
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
+        }
     }
 }

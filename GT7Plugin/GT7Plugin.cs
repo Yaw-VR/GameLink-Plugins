@@ -21,7 +21,7 @@ namespace GT7Plugin
     public class GT7Plugin : Game
     {
         private IProfileManager controller;
-        private IMainFormDispatcher dispacther;
+        private IMainFormDispatcher dispatcher;
 
 
         private Stopwatch suspStopwatch = new Stopwatch();
@@ -45,9 +45,9 @@ namespace GT7Plugin
 
         
 
-        public LedEffect DefaultLED() => dispacther.JsonToLED(defProfilejson);
+        public LedEffect DefaultLED() => dispatcher.JsonToLED(defProfilejson);
 
-        public List<Profile_Component> DefaultProfile() => dispacther.JsonToComponents(defProfilejson);
+        public List<Profile_Component> DefaultProfile() => dispatcher.JsonToComponents(defProfilejson);
 
         private UDPListener listener;
         private Cryptor cryptor;
@@ -67,14 +67,9 @@ namespace GT7Plugin
 
         public void Init()
         {
-            
 
-            if (!int.TryParse(Interaction.InputBox("Enter the incoming data port for Gran Turismo 7 \nLeave default value if its running on the Playstation", "Endpoint", "33740"), out inputPort)
-                || inputPort < 0 || inputPort > 65535)
-            {
-                inputPort = 33740;
-            }
 
+            inputPort = dispatcher.GetConfigObject<Config>().Port;
             listener = new UDPListener(inputPort);
             cryptor = new Cryptor();
             listener.OnPacketReceived += Listener_OnPacketReceived;
@@ -168,7 +163,7 @@ namespace GT7Plugin
         public void SetReferences(IProfileManager controller, IMainFormDispatcher dispatcher)
         {
             this.controller = controller;
-            this.dispacther = dispatcher;
+            this.dispatcher = dispatcher;
         }
 
 
@@ -180,7 +175,9 @@ namespace GT7Plugin
 
         }
 
-
-        
+        public Type GetConfigBody()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

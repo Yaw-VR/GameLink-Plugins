@@ -427,5 +427,10 @@ namespace YawVR_Game_Engine.Plugin
 
             return result;
         }
+
+        public Type GetConfigBody()
+        {
+            return null;
+        }
     }
 }

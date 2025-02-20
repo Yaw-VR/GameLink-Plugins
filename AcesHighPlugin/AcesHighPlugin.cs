@@ -10,19 +10,18 @@ using System.Text;
 using System.Threading;
 using YawGLAPI;
 
-namespace YawVR_Game_Engine.Plugin
+namespace AcesHighPlugin
 {
-
+   
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Aces High")]
     [ExportMetadata("Version", "1.0")]
     class AcesHighPlugin : Game {
-
-        private static int LISTENING_PORT = 556;
         private bool stopThread;
 
         private UdpClient udpClient;
         private IProfileManager controller;
+        private IMainFormDispatcher dispatcher;
         private Thread readThread;
         private IPEndPoint remotePoint;
 
@@ -74,6 +73,7 @@ namespace YawVR_Game_Engine.Plugin
         public void SetReferences(IProfileManager controller, IMainFormDispatcher dispatcher)
         {
             this.controller = controller;
+            this.dispatcher = dispatcher;
 
         }
         public void Init() {
@@ -84,7 +84,9 @@ namespace YawVR_Game_Engine.Plugin
 
 
         private void ReadFunction() {
-            udpClient = new UdpClient(LISTENING_PORT);
+
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            udpClient = new UdpClient(pConfig.port);
             Console.WriteLine("aces high udp listening started");
             try {
                 while (!stopThread) {
@@ -139,6 +141,11 @@ namespace YawVR_Game_Engine.Plugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
         }
     }
 }

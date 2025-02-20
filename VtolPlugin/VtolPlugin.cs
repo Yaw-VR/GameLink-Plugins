@@ -181,6 +181,11 @@ namespace YawVR_Game_Engine
         {
             return null;
         }
+
+        public Type GetConfigBody()
+        {
+            return null;
+        }
     }
 }
       

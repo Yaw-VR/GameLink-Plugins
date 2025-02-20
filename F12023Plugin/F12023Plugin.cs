@@ -1,5 +1,6 @@
 ﻿using F12023Plugin.Properties;
 using F1Sharp;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -90,7 +91,8 @@ namespace F12023Plugin
 
         public void Init()
         {
-            client = new TelemetryClient(20777);
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            client = new TelemetryClient(pConfig.Port);
 
             client.OnCarTelemetryDataReceive += Client_OnCarTelemetryDataReceive;
             client.OnMotionDataReceive += Client_OnMotionDataReceive;
@@ -161,6 +163,11 @@ namespace F12023Plugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
         }
     }
 }

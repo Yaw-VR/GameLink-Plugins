@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -10,7 +11,7 @@ using System.Threading;
 using System.Xml;
 using YawGLAPI;
 
-namespace YawVR_Game_Engine.Plugin
+namespace Dirt4Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Dirt Rally 4")]
@@ -35,7 +36,7 @@ namespace YawVR_Game_Engine.Plugin
         public Stream SmallLogo => GetStream("recent.png");
         public Stream Background => GetStream("wide.png");
 
-        private const int Port = 20777;
+        //private const int Port = 20777;
         
         public List<Profile_Component> DefaultProfile() {
 
@@ -87,7 +88,10 @@ namespace YawVR_Game_Engine.Plugin
             this.dispatcher = dispatcher;
         }
         public void Init() {
-            udpClient = new UdpClient(Port);
+
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            dispatcher.DialogShow($"Using port {pConfig.Port}",DIALOG_TYPE.INFO);
+            udpClient = new UdpClient(pConfig.Port);
             readThread = new Thread(new ThreadStart(ReadFunction));
             running = true;
             readThread.Start();
@@ -228,5 +232,9 @@ namespace YawVR_Game_Engine.Plugin
             return assembly.GetManifestResourceStream(fullResourceName);
         }
 
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
+        }
     }
 }

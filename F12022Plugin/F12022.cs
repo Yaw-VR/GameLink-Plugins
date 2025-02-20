@@ -1,5 +1,6 @@
 ﻿using Codemasters.F1_2020;
 using F12022Plugin.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -78,7 +79,9 @@ namespace F12022Plugin
         public void Init()
         {
             if (fields == null) fields = typeof(MotionPacket).GetFields();
-            receivingUdp = new UdpClient(20777);
+
+            var pConfig = dispatcher.GetConfigObject<Config>();
+            receivingUdp = new UdpClient(pConfig.Port);
             receivingUdp.Client.ReceiveTimeout = 5000;
 
             running = true;
@@ -177,6 +180,11 @@ namespace F12022Plugin
             var rr = assembly.GetManifestResourceNames();
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
+        }
+
+        public Type GetConfigBody()
+        {
+            return typeof(Config);
         }
     }
 }
