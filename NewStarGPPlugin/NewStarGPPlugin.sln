@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewStarGPPlugin", "NewStarGPPlugin.csproj", "{2D6C2466-ED4C-4619-A10C-835D107C895C}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedLib", "..\SharedLib\SharedLib.shproj", "{A0988E26-18F3-4AE4-95DF-3BD3B0ABE37E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YawGLAPI", "..\YawGLAPI\YawGLAPI.csproj", "{200E7B6F-39CC-476D-976C-2BA4E9014015}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		All|Any CPU = All|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D6C2466-ED4C-4619-A10C-835D107C895C}.All|Any CPU.ActiveCfg = All|Any CPU
+		{2D6C2466-ED4C-4619-A10C-835D107C895C}.All|Any CPU.Build.0 = All|Any CPU
+		{2D6C2466-ED4C-4619-A10C-835D107C895C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D6C2466-ED4C-4619-A10C-835D107C895C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D6C2466-ED4C-4619-A10C-835D107C895C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D6C2466-ED4C-4619-A10C-835D107C895C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{200E7B6F-39CC-476D-976C-2BA4E9014015}.All|Any CPU.ActiveCfg = All|Any CPU
+		{200E7B6F-39CC-476D-976C-2BA4E9014015}.All|Any CPU.Build.0 = All|Any CPU
+		{200E7B6F-39CC-476D-976C-2BA4E9014015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{200E7B6F-39CC-476D-976C-2BA4E9014015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{200E7B6F-39CC-476D-976C-2BA4E9014015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{200E7B6F-39CC-476D-976C-2BA4E9014015}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\SharedLib\SharedLib.projitems*{2d6c2466-ed4c-4619-a10c-835d107c895c}*SharedItemsImports = 5
+		..\SharedLib\SharedLib.projitems*{a0988e26-18f3-4ae4-95df-3bd3b0abe37e}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal
