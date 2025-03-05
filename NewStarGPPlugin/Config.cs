@@ -12,9 +12,6 @@ namespace YawVR_Game_Engine.Plugin
         [Info(Description = "Port the game sends data on (12345)", Name = "Port", RegexValidator = ConfigValidator.PortRange)]
         public int Port = 12345;
 
-        [Info(Description = "Use UUVR mod", Name = "Use UUVR")]
-        public bool UseUUVR = true;
-
         public Config() { }
 
     }

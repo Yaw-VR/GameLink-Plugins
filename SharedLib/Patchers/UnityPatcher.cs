@@ -229,6 +229,10 @@ namespace SharedLib
                         quit = true;
                     }
                 }
+                else
+                {
+                    quit = true;
+                }
             }
 
             return Task.FromResult(!quit);

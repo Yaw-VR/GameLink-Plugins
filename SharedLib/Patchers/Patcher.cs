@@ -89,10 +89,10 @@ namespace SharedLib
             dispatcher.DialogShow(message, DIALOG_TYPE.INFO);
         }
 
-        protected bool AskQuestion(string message)
+        public bool AskQuestion(string message)
         {
             bool result = false;
-            dispatcher.DialogShow(message, DIALOG_TYPE.QUESTION, (yes) => result = yes, no => result = no);
+            dispatcher.DialogShow(message, DIALOG_TYPE.QUESTION, (yes) => result = true, no => result = false);
             return result;
         }
 
@@ -117,7 +117,7 @@ namespace SharedLib
             if (success)
                 Feedback(true, "Patching complete.");
             else
-                Feedback(false, "Patching failed.");
+                Feedback(false, "Patching Aborted.");
 
             return success;
         }

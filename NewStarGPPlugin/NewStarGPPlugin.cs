@@ -109,9 +109,12 @@ namespace YawVR_Game_Engine.Plugin
             Debugger.Launch();
 #endif
 
+            bool UseUUVR = false;
+            dispatcher.DialogShow("Use UUVR with RaiPal?", DIALOG_TYPE.QUESTION, (yes) => UseUUVR = true);
+
             var patcher = UnityPatcher.Create<UnityPatcher>(this, dispatcher, options =>
             {
-                options.ModType = this.settings.UseUUVR ? ModType.RaiPal : ModType.BepInEx5_x64;
+                options.ModType = UseUUVR ? ModType.RaiPal : ModType.BepInEx5_x64;
                 options.PluginName = "NewStarGPTelemetryMod";
                 options.DoorStopPath = "release";
                 options.Repository = new GithubOptions
