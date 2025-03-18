@@ -1,6 +1,7 @@
 using IronRebellion;
 
 using SharedLib;
+using SharedLib.TelemetryHelper;
 
 using System.ComponentModel.Composition;
 using System.Diagnostics;
@@ -16,7 +17,7 @@ namespace YawVR_Game_Engine.Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Iron Rebellion")]
-    [ExportMetadata("Version", "0.13")]
+    [ExportMetadata("Version", "0.14")]
     public class Plugin : Game
     {
 
@@ -50,8 +51,8 @@ namespace YawVR_Game_Engine.Plugin
 
         #endregion
 
-        
-        UdpClient udpClient;
+
+        private UdpTelemetry<TelemetryData> telemetry;
 
         IPEndPoint remoteEndPoint;
 
@@ -67,8 +68,7 @@ namespace YawVR_Game_Engine.Plugin
         public void Exit()
         {
             tokenSource?.Cancel();
-            udpClient.Close();
-            udpClient = null;
+            telemetry.Dispose();           
             running = false;
         }
 
@@ -96,9 +96,6 @@ namespace YawVR_Game_Engine.Plugin
 
             tokenSource = new();
             this.settings = dispatcher.GetConfigObject<Config>();
-
-            udpClient = new UdpClient(settings.Port);
-            udpClient.Client.ReceiveTimeout = 2000;
             running = true;
 
             new Thread(ReadThread).Start();
@@ -108,40 +105,28 @@ namespace YawVR_Game_Engine.Plugin
         public void ReadThread()
         {
 
-            Console.WriteLine($"Listening for UDP packets on port {settings.RemoteIP}:{settings.Port}...");
             int telemetryDataSize = Marshal.SizeOf(typeof(TelemetryData));
+            try
+            {
+                telemetry = new UdpTelemetry<TelemetryData>(new UdpTelemetryConfig
+                {
+                    ReceiveAddress = new IPEndPoint(IPAddress.Parse(settings.IP), settings.Port)
+                });
 
+            }
+            catch (Exception x)
+            {
+                dispatcher.ShowNotification(NotificationType.ERROR, x.Message);
+                Exit();
+            }
 
             while (running)
             {
                 try
                 {
                     // Receive UDP data
-                    byte[] data = udpClient.Receive(ref remoteEndPoint);
-
+                    var telem = telemetry.Receive();
                     
-                    var telem = new TelemetryData
-                    {
-                        velocityX = BitConverter.ToSingle(data, 0),
-                        velocityY = BitConverter.ToSingle(data, 4),
-                        velocityZ = BitConverter.ToSingle(data, 8),
-                        angularX = BitConverter.ToSingle(data, 12),
-                        angularY = BitConverter.ToSingle(data, 16),
-                        angularZ = BitConverter.ToSingle(data, 20),
-                        rotationX = BitConverter.ToSingle(data, 24),
-                        rotationY = BitConverter.ToSingle(data, 28),
-                        rotationZ = BitConverter.ToSingle(data, 32),
-                        adjustedTilt = BitConverter.ToSingle(data, 36),
-                        currentLean = BitConverter.ToSingle(data, 40),
-                        isFlying = data[44] != 0,
-                        isRunning = data[45] != 0,
-                        isHit = data[46] != 0,
-                        weaponFired = data[47] != 0,
-                        stomped = data[48] != 0,
-                        landed = data[49] != 0,
-                        jumped = data[50] != 0
-                    };
-
                     foreach (var (i, key, value) in GetInputs(telem).WithIndex())
                     {
                         controller.SetInput(i, value);
@@ -157,7 +142,6 @@ namespace YawVR_Game_Engine.Plugin
                 {
                     Debug.WriteLine($"Error: {ex.Message}");
                 }
-
 
             }
 
@@ -228,6 +212,7 @@ namespace YawVR_Game_Engine.Plugin
 
         public float adjustedTilt;
         public float currentLean;
+        
 
         public bool isFlying;
         public bool isRunning;
@@ -236,6 +221,11 @@ namespace YawVR_Game_Engine.Plugin
         public bool stomped;
         public bool landed;
         public bool jumped;
+
+        // 0 = none, -1 = left, 1 = right
+        public float stompedFoot;
+
+        public float speed;
 
         public TelemetryData()
         {
