@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GT7Plugin
 {
-    internal class GT7Output
+    internal struct GT7Output
     {
         public float Yaw;
         public float Pitch;
@@ -24,5 +24,7 @@ namespace GT7Plugin
         public float OnTrack;
         public float IsPaused;
         public float Loading;
+        public float InRace;
+        public float CentripetalAcceleration;
     }
 }

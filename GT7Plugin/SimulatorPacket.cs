@@ -3,109 +3,346 @@ using System.Net;
 using System.Numerics;
 
 
-
+// credit. Nenkai - PDTools https://github.com/Nenkai/PDTools
 namespace GT7Plugin
 {
+    public enum SimInterfacePacketType
+    {
+        PacketType1,
+
+        // Both of these were added in GT7 1.42.
+        // Initial signs of expansions can be seen in 1.40 (possibly earlier even?) - 3 switch cases (+ default)
+        // can already be seen, all using 'A' and the same amount of bytes.
+
+        /// <summary>
+        /// GT7 >= 1.42
+        /// </summary>
+        PacketType2,
+
+        /// <summary>
+        /// GT7 >= 1.42
+        /// </summary>
+        PacketType3
+    }
+
     /// <summary>
     /// Packet from the GT Engine Simulation.
     /// </summary>
     public class SimulatorPacket
     {
-        public float PositionX;
-        public float PositionY;
-        public float PositionZ;
+        /// <summary>
+        /// Position on the track. Track units are in meters.
+        /// </summary>
+        public Vector3 Position { get; set; }
 
-        public float VelocityX;
-        public float VelocityY;
-        public float VelocityZ;
+        /// <summary>
+        /// Velocity in track units (which are meters) for each axis.
+        /// </summary>
+        public Vector3 Velocity { get; set; }
 
-        public float RotationX;
-        public float RotationY;
-        public float RotationZ;
+        /// <summary>
+        /// Rotation as a quaternion.
+        /// </summary>
+        public Quaternion Rotation { get; set; }
 
+        /// <summary>
+        /// How fast the car turns around axes. (In radians/second, -1 to 1).
+        /// </summary>
+        public Vector3 AngularVelocity { get; set; }
 
-        public float RelativeOrientationToNorth;
+        /// <summary>
+        /// Body height.
+        /// </summary>
+        public float BodyHeight { get; set; }
 
-        public float AngularVelocityX;
-        public float AngularVelocityY;
-        public float AngularVelocityZ;
+        /// <summary>
+        /// Engine revolutions per minute.
+        /// </summary>
+        public float EngineRPM { get; set; }
 
-        public float BodyHeight;
-        public float EngineRPM;
-        public float GasLevel;
-        public float GasCapacity;
-        public float MetersPerSecond;
-        public float TurboBoost;
-        public float OilPressure;
-        public float WaterTemperature;
-        public float OilTemperature;
-        public float TireFL_SurfaceTemperature;
-        public float TireFR_SurfaceTemperature;
-        public float TireRL_SurfaceTemperature;
-        public float TireRR_SurfaceTemperature;
-        public int PacketId;
-        public short LapCount;
-        public short LapsInRace;
-        //public TimeSpan BestLapTime;
-        //public TimeSpan LastLapTime;
-       //public TimeSpan TimeOfDayProgression;
-        public short PreRaceStartPositionOrQualiPos;
-        public short NumCarsAtPreRace;
-        public short MinAlertRPM;
-        public short MaxAlertRPM;
-        public short CalculatedMaxSpeed;
-        public SimulatorFlags Flags;
-        public byte CurrentGear;
-        public byte SuggestedGear;
-        public byte Throttle;
-        public byte Brake;
-        public byte Empty_0x93;
-        public float RoadPlaneX;
-        public float RoadPlaneY;
-        public float RoadPlaneZ;
-        public float RoadPlaneDistance;
-        public float WheelFL_RevPerSecond;
-        public float WheelFR_RevPerSecond;
-        public float WheelRL_RevPerSecond;
-        public float WheelRR_RevPerSecond;
-        public float TireFL_TireRadius;
-        public float TireFR_TireRadius;
-        public float TireRL_TireRadius;
-        public float TireRR_TireRadius;
-        public float TireFL_SusHeight;
-        public float TireFR_SusHeight;
-        public float TireRL_SusHeight;
-        public float TireRR_SusHeight;
-        public float ClutchPedal;
-        public float ClutchEngagement;
-        public float RPMFromClutchToGearbox;
-        public float TransmissionTopSpeed;
-        //public float[] GearRatios = new float[7];
-        public int CarCode;
+        /// <summary>
+        /// Gas level for the current car (in liters, from 0 to <see cref="GasCapacity"/>).
+        /// <para> Note: This may change from 0 when regenerative braking with electric cars, check accordingly with <see cref="GasCapacity"/>. </para>
+        /// </summary>
+        public float GasLevel { get; set; }
+
+        /// <summary>
+        /// Max gas capacity for the current car.
+        /// Will be 100 for most cars, 5 for karts, 0 for electric cars
+        /// </summary>
+        public float GasCapacity { get; set; }
+
+        /// <summary>
+        /// Current speed in meters per second. <see cref="MetersPerSecond * 3.6"/> to get it in KPH.
+        /// </summary>
+        public float MetersPerSecond { get; set; }
+
+        /// <summary>
+        /// Value below 1.0 is below 0 ingame, so 2.0 = 1 x 100kPa
+        /// </summary>
+        public float TurboBoost { get; set; }
+
+        /// <summary>
+        /// Oil Pressure (in Bars)
+        /// </summary>
+        public float OilPressure { get; set; }
+
+        /// <summary>
+        /// Games will always send 85.
+        /// </summary>
+        public float WaterTemperature { get; set; }
+
+        /// <summary>
+        /// Games will always send 110.
+        /// </summary>
+        public float OilTemperature { get; set; }
+
+        /// <summary>
+        /// Front Left Tire - Surface Temperature (in °C)
+        /// </summary>
+        public float TireFL_SurfaceTemperature { get; set; }
+
+        /// <summary>
+        /// Front Right - Surface Temperature (in °C)
+        /// </summary>
+        public float TireFR_SurfaceTemperature { get; set; }
+
+        /// <summary>
+        /// Rear Left - Surface Temperature (in °C)
+        /// </summary>
+        public float TireRL_SurfaceTemperature { get; set; }
+
+        /// <summary>
+        /// Rear Right - Surface Temperature (in °C)
+        /// </summary>
+        public float TireRR_SurfaceTemperature { get; set; }
+
+        /// <summary>
+        /// Id of the packet for proper ordering.
+        /// </summary>
+        public int PacketId { get; set; }
+
+        /// <summary>
+        /// Current lap count.
+        /// </summary>
+        public short LapCount { get; set; }
+
+        /// <summary>
+        /// Laps to finish.
+        /// </summary>
+        public short LapsInRace { get; set; }
+
+        /// <summary>
+        /// Best Lap Time. 
+        /// <para>Defaults to -1 millisecond when not set.</para>
+        /// </summary>
+        public TimeSpan BestLapTime { get; set; }
+
+        /// <summary>
+        /// Last Lap Time.
+        /// <para>Defaults to -1 millisecond when not set.</para>
+        /// </summary>
+        public TimeSpan LastLapTime { get; set; }
+
+        /// <summary>
+        /// Current time of day on the track.
+        /// </summary>
+        public TimeSpan TimeOfDayProgression { get; set; }
+
+        /// <summary>
+        /// Position of the car before the race has started.
+        /// <para>Will be -1 once the race is started.</para>
+        /// </summary>
+        public short PreRaceStartPositionOrQualiPos { get; set; }
+
+        /// <summary>
+        /// Number of cars in the race before the race has started.
+        /// <para>Will be -1 once the race is started.</para>
+        /// </summary>
+        public short NumCarsAtPreRace { get; set; }
+
+        /// <summary>
+        /// Minimum RPM to which the rev limiter shows an alert.
+        /// </summary>
+        public short MinAlertRPM { get; set; }
+
+        /// <summary>
+        /// Maximum RPM to the rev limiter alert.
+        /// </summary>
+        public short MaxAlertRPM { get; set; }
+
+        /// <summary>
+        /// Possible max speed achievable using the current transmission settings.
+        /// <para> Will change depending on transmission settings.</para>
+        /// </summary>
+        public short CalculatedMaxSpeed { get; set; }
+
+        /// <summary>
+        /// Packet flags.
+        /// </summary>
+        public SimulatorFlags Flags { get; set; }
+
+        /// <summary>
+        /// Current Gear for the car.
+        /// <para> This value will never be more than 15 (4 bits).</para>
+        /// </summary>
+        public byte CurrentGear { get; set; }
+
+        /// <summary>
+        /// (Assist) Suggested Gear to downshift to. 
+        /// <para> This value will never be more than 15 (4 bits), All bits on (aka 15) implies there is no current suggested gear.</para>
+        /// </summary>
+        public byte SuggestedGear { get; set; }
+
+        /// <summary>
+        /// Throttle (0-255)
+        /// </summary>
+        public byte Throttle { get; set; }
+
+        /// <summary>
+        /// Brake Pedal (0-255)
+        /// </summary>
+        public byte Brake { get; set; }
+
+        public byte Empty_0x93 { get; set; }
+
+        public Vector3 RoadPlane { get; set; }
+
+        public float RoadPlaneDistance { get; set; }
+
+        /// <summary>
+        /// Front Left Wheel - Revolutions Per Second (in Radians)
+        /// </summary>
+        public float WheelFL_RevPerSecond { get; set; }
+
+        /// <summary>
+        /// Front Right Wheel - Revolutions Per Second (in Radians)
+        /// </summary>
+        public float WheelFR_RevPerSecond { get; set; }
+
+        /// <summary>
+        /// Rear Left Wheel - Revolutions Per Second (in Radians)
+        /// </summary>
+        public float WheelRL_RevPerSecond { get; set; }
+
+        /// <summary>
+        /// Rear Right Wheel - Revolutions Per Second (in Radians)
+        /// </summary>
+        public float WheelRR_RevPerSecond { get; set; }
+
+        /// <summary>
+        /// Front Left Tire - Tire Radius (in Meters)
+        /// </summary>
+        public float TireFL_TireRadius { get; set; }
+
+        /// <summary>
+        /// Front Right Tire - Tire Radius (in Meters)
+        /// </summary>
+        public float TireFR_TireRadius { get; set; }
+
+        /// <summary>
+        /// Rear Left Tire - Tire Radius (in Meters)
+        /// </summary>
+        public float TireRL_TireRadius { get; set; }
+
+        /// <summary>
+        /// Rear Right Tire - Tire Radius (in Meters)
+        /// </summary>
+        public float TireRR_TireRadius { get; set; }
+
+        /// <summary>
+        /// Front Left Tire - Suspension Height
+        /// </summary>
+        public float TireFL_SusHeight { get; set; }
+
+        /// <summary>
+        /// Front Right Tire - Suspension Height
+        /// </summary>
+        public float TireFR_SusHeight { get; set; }
+
+        /// <summary>
+        /// Rear Left Tire - Suspension Height
+        /// </summary>
+        public float TireRL_SusHeight { get; set; }
+
+        /// <summary>
+        /// Rear Right Tire - Suspension Height
+        /// </summary>
+        public float TireRR_SusHeight { get; set; }
+
+        /// <summary>
+        /// 0.0 to 1.0
+        /// </summary>
+        public float ClutchPedal { get; set; }
+
+        /// <summary>
+        /// 0.0 to 1.0
+        /// </summary>
+        public float ClutchEngagement { get; set; }
+
+        /// <summary>
+        /// Basically same as engine rpm when in gear and the clutch pedal is not depressed.
+        /// </summary>
+        public float RPMFromClutchToGearbox { get; set; }
+
+        /// <summary>
+        /// Top Speed (as a Gear Ratio value)
+        /// </summary>
+        public float TransmissionTopSpeed { get; set; }
+
+        /// <summary>
+        /// Gear ratios for the car. Up to 7.
+        /// </summary>
+        public float[] GearRatios { get; set; } = new float[7];
+
+        /// <summary>
+        /// Internal code that identifies the car.
+        /// <para>This value may be overriden if using a car that uses 9 or more gears (oversight).</para>
+        /// </summary>
+        public int CarCode { get; set; }
+
+        /// <summary>
+        /// In radians. GT7 and Heartbeat 'B' or '~' only.
+        /// </summary>
+        public float? WheelRotation { get; set; }
+
+        /// <summary>
+        /// GT7 and Heartbeat 'B' or '~' only.
+        /// </summary>
+        public float? FillerFloatFB { get; set; }
+
+        /// <summary>
+        /// GT7 and Heartbeat 'B' or '~' only.
+        /// </summary>
+        public float? Sway { get; set; }
+
+        /// <summary>
+        /// GT7 and Heartbeat 'B' or '~' only.
+        /// </summary>
+        public float? Heave { get; set; }
+
+        /// <summary>
+        /// GT7 and Heartbeat 'B' or '~' only.
+        /// </summary>
+        public float? Surge { get; set; }
+
+        public byte? Unk1 { get; set; }
+        public byte? Unk2 { get; set; }
+        public byte? Unk3 { get; set; } // 4 = electric
+        public byte? NoGasConsumption { get; set; }
+        public Vector4? Unk5 { get; set; }
+        public float? EnergyRecovery { get; set; }
+        public float? Unk7 { get; set; }
 
         public void Read(Span<byte> data)
         {
-            SpanReader sr = new SpanReader(data);
+            var sr = new SpanReader(data);
             int magic = sr.ReadInt32();
 
-            PositionX = sr.ReadSingle();
-            PositionY = sr.ReadSingle();
-            PositionZ = sr.ReadSingle();
-
-            VelocityX = sr.ReadSingle();
-            VelocityY = sr.ReadSingle();
-            VelocityZ = sr.ReadSingle();
-
-            RotationX = sr.ReadSingle();
-            RotationY = sr.ReadSingle();
-            RotationZ = sr.ReadSingle();
-
-            RelativeOrientationToNorth = sr.ReadSingle();
-
-            AngularVelocityX = sr.ReadSingle();
-            AngularVelocityY = sr.ReadSingle();
-            AngularVelocityZ = sr.ReadSingle();
-
+            Position = new Vector3(sr.ReadSingle(), sr.ReadSingle(), sr.ReadSingle());
+            Velocity = new Vector3(sr.ReadSingle(), sr.ReadSingle(), sr.ReadSingle());
+            Rotation = new Quaternion(sr.ReadSingle(), sr.ReadSingle(), sr.ReadSingle(), sr.ReadSingle());
+            AngularVelocity = new Vector3(sr.ReadSingle(), sr.ReadSingle(), sr.ReadSingle());
             BodyHeight = sr.ReadSingle();
             EngineRPM = sr.ReadSingle();
             sr.Position += sizeof(int); // Skip IV
@@ -123,13 +360,9 @@ namespace GT7Plugin
             PacketId = sr.ReadInt32();
             LapCount = sr.ReadInt16();
             LapsInRace = sr.ReadInt16();
-
-            // These are laptimes, we dont care
-            sr.ReadInt32();
-            sr.ReadInt32();
-            sr.ReadInt32();
-            ////////////////////////////////////
-
+            BestLapTime = TimeSpan.FromMilliseconds(sr.ReadInt32());
+            LastLapTime = TimeSpan.FromMilliseconds(sr.ReadInt32());
+            TimeOfDayProgression = TimeSpan.FromMilliseconds(sr.ReadInt32());
             PreRaceStartPositionOrQualiPos = sr.ReadInt16();
             NumCarsAtPreRace = sr.ReadInt16();
             MinAlertRPM = sr.ReadInt16();
@@ -145,10 +378,7 @@ namespace GT7Plugin
             Brake = sr.ReadByte();
             Empty_0x93 = sr.ReadByte();
 
-            RoadPlaneX = sr.ReadSingle();
-            RoadPlaneY = sr.ReadSingle();
-            RoadPlaneZ = sr.ReadSingle();
-
+            RoadPlane = new Vector3(sr.ReadSingle(), sr.ReadSingle(), sr.ReadSingle());
             RoadPlaneDistance = sr.ReadSingle();
 
             WheelFL_RevPerSecond = sr.ReadSingle();
@@ -173,13 +403,34 @@ namespace GT7Plugin
             TransmissionTopSpeed = sr.ReadSingle();
 
             // Always read as a fixed 7 gears
-            for (var i = 0; i < 7; i++) sr.ReadSingle();
+            for (var i = 0; i < 7; i++)
+                GearRatios[i] = sr.ReadSingle();
 
             // Normally this one is not set at all. The game memcpy's the gear ratios without bound checking
             // The LC500 which has 10 gears even overrides the car code 😂
             float empty_or_gearRatio8 = sr.ReadSingle();
 
             CarCode = sr.ReadInt32();
+
+            if (data.Length >= 0x13C)
+            {
+                WheelRotation = sr.ReadSingle();
+                FillerFloatFB = sr.ReadSingle();
+                Sway = sr.ReadSingle();
+                Heave = sr.ReadSingle();
+                Surge = sr.ReadSingle();
+            }
+
+            if (data.Length >= 0x158)
+            {
+                Unk1 = sr.ReadByte();
+                Unk2 = sr.ReadByte();
+                Unk3 = sr.ReadByte();
+                NoGasConsumption = sr.ReadByte();
+                Unk5 = new Vector4(sr.ReadSingle(), sr.ReadSingle(), sr.ReadSingle(), sr.ReadSingle());
+                EnergyRecovery = sr.ReadSingle();
+                Unk7 = sr.ReadSingle();
+            }
         }
 
     }
