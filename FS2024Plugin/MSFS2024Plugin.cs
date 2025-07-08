@@ -231,6 +231,8 @@ namespace MSFS2024
                 SimConnect simconnect = null;
                 simconnect = new SimConnect("Managed Data Request", this.Handle, WM_USER_SIMCONNECT, null, 0);
 
+                InputEvents(simconnect);
+
                 // define a data structure
                 simconnect.AddToDataDefinition(DEFINITIONS.Struct1, "PLANE LATITUDE", "degrees", SIMCONNECT_DATATYPE.FLOAT64, 0.0f, SimConnect.SIMCONNECT_UNUSED);
                 simconnect.AddToDataDefinition(DEFINITIONS.Struct1, "PLANE LONGITUDE", "degrees", SIMCONNECT_DATATYPE.FLOAT64, 0.0f, SimConnect.SIMCONNECT_UNUSED);
@@ -610,6 +612,7 @@ namespace MSFS2024
             try
             {
                 dispatcher.ShowNotification(NotificationType.INFO, "Connected to Simconnect");
+
                 while (!stop)
                 {
                     // The following call returns identical information to:
@@ -628,6 +631,47 @@ namespace MSFS2024
 
 
 
+        }
+
+        // Esemény azonosítók
+        private enum EventID
+        {
+            MasterBatteryOff = 1000,
+        }
+
+        // Bemenet azonosítók
+        private enum InputID
+        {
+            Input0 = 1000,
+        }
+
+        private enum GroupID 
+        {
+            GROUP0 = 1000,
+        }
+
+        private enum DownEventID
+        {
+            DownEventID0 = 1000,
+        }
+
+        void InputEvents(SimConnect simconnect) 
+        {
+            Debug.WriteLine("InputEvents..");
+            // Esemény beállítása
+            simconnect.MapClientEventToSimEvent(EventID.MasterBatteryOff, "MASTER_BATTERY_OFF");
+
+            // Esemény hozzáadása a csoporthoz
+            simconnect.AddClientEventToNotificationGroup(GroupID.GROUP0, EventID.MasterBatteryOff, false);
+
+            // Csoport prioritás beállítása
+            //simconnect.SetNotificationGroupPriority(GroupID.GROUP0, SimConnectGroupPriority.Highest);
+
+            // Input esemény és az esemény hozzárendelése
+            simconnect.MapInputEventToClientEvent(InputID.Input0, "z", EventID.MasterBatteryOff, 0, DownEventID.DownEventID0, 0,false);
+
+            // Bemeneti csoport aktiválása
+            simconnect.SetInputGroupState(InputID.Input0, 1);
         }
 
 
