@@ -1,3 +1,7 @@
+param (
+    [string]$buildConfig = "Debug"
+)
+
 # Get the current script's directory (assumes the script is in the root of the solution)
 $scriptDirectory = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
@@ -11,16 +15,14 @@ if (Test-Path $outputDirectory) {
 }
 New-Item -ItemType Directory -Path $outputDirectory
 
-# Define the build configuration
-$buildConfiguration = "Debug"  # or "Release"
 
 # Search for project bin folders and copy DLLs
 $projectDirectories = Get-ChildItem -Path $solutionDirectory -Recurse -Directory | Where-Object {
-    Test-Path "$($_.FullName)\bin\$buildConfiguration\net8.0"
+    Test-Path "$($_.FullName)\bin\$buildConfig\net8.0"
 }
 
 foreach ($projectDir in $projectDirectories) {
-    $sourceDir = "$($projectDir.FullName)\bin\$buildConfiguration\net8.0"
+    $sourceDir = "$($projectDir.FullName)\bin\$buildConfig\net8.0"
     Write-Host "Checking: $sourceDir"
 
     if (Test-Path $sourceDir) {

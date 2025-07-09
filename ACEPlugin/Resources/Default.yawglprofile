@@ -1,244 +1,250 @@
 {
-  "GameName": "Assetto Corsa Evo",
-  "Name": "Default",
-  "Components": [
-    {
-      "Constant": false,
-      "Input_index": 7,
-      "Output_index": 1,
-      "MultiplierPos": 4.0,
-      "MultiplierNeg": 4.0,
-      "Offset": 0.0,
-      "Inverse": true,
-      "Limit": -1.0,
-      "Smoothing": 0.015168253,
-      "Enabled": true,
-      "Spikeflatter": {
-        "Enabled": false,
-        "Limit": 100.0,
-        "Strength": 0.5
-      },
-      "Deadzone": 0.0,
-      "Type": 0,
-      "Condition": [],
-      "Math": []
+    "GameName": "Assetto Corsa Evo",
+    "Name": "Default",
+    "Components": [{
+            "Constant": false,
+            "Input_index": 8,
+            "Output_index": 0,
+            "MultiplierPos": 1.0,
+            "MultiplierNeg": 1.0,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }, {
+            "Constant": false,
+            "Input_index": 9,
+            "Output_index": 1,
+            "MultiplierPos": 1.5086982,
+            "MultiplierNeg": 1.5086982,
+            "Offset": 0.0,
+            "Inverse": true,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }, {
+            "Constant": false,
+            "Input_index": 10,
+            "Output_index": 2,
+            "MultiplierPos": 1.0,
+            "MultiplierNeg": 1.0,
+            "Offset": 0.0,
+            "Inverse": true,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }, {
+            "Constant": false,
+            "Input_index": 7,
+            "Output_index": 1,
+            "MultiplierPos": 5.0,
+            "MultiplierNeg": 5.0,
+            "Offset": 0.0,
+            "Inverse": true,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }, {
+            "Constant": false,
+            "Input_index": 1,
+            "Output_index": 3,
+            "MultiplierPos": 0.15,
+            "MultiplierNeg": 0.15,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }, {
+            "Constant": true,
+            "Input_index": 32,
+            "Output_index": 4,
+            "MultiplierPos": 20.0,
+            "MultiplierNeg": 20.0,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }, {
+            "Constant": false,
+            "Input_index": 31,
+            "Output_index": 2,
+            "MultiplierPos": 50.0,
+            "MultiplierNeg": 50.0,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }, {
+            "Constant": false,
+            "Input_index": 28,
+            "Output_index": 1,
+            "MultiplierPos": 50.0,
+            "MultiplierNeg": 50.0,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }, {
+            "Constant": false,
+            "Input_index": 29,
+            "Output_index": 1,
+            "MultiplierPos": 50.0,
+            "MultiplierNeg": 50.0,
+            "Offset": 0.0,
+            "Inverse": false,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }, {
+            "Constant": false,
+            "Input_index": 30,
+            "Output_index": 1,
+            "MultiplierPos": 50.0,
+            "MultiplierNeg": 50.0,
+            "Offset": 0.0,
+            "Inverse": true,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }, {
+            "Constant": false,
+            "Input_index": 31,
+            "Output_index": 1,
+            "MultiplierPos": 50.0,
+            "MultiplierNeg": 50.0,
+            "Offset": 0.0,
+            "Inverse": true,
+            "Limit": -1.0,
+            "Smoothing": 1.0,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100.0,
+                "Strength": 0.5
+            },
+            "Deadzone": 0.0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }
+    ],
+    "Effects": {
+        "EffectID": 0,
+        "InputID": 0,
+        "Multiplier": 0.004,
+        "Colors": [{
+                "R": 255,
+                "G": 40,
+                "B": 0
+            }, {
+                "R": 80,
+                "G": 80,
+                "B": 80
+            }, {
+                "R": 255,
+                "G": 100,
+                "B": 0
+            }, {
+                "R": 140,
+                "G": 0,
+                "B": 255
+            }
+        ]
     },
-    {
-      "Constant": false,
-      "Input_index": 7,
-      "Output_index": 1,
-      "MultiplierPos": 3.0,
-      "MultiplierNeg": 3.0,
-      "Offset": 0.0,
-      "Inverse": true,
-      "Limit": 6.0,
-      "Smoothing": 0.6715333,
-      "Enabled": true,
-      "Spikeflatter": {
-        "Enabled": false,
-        "Limit": 100.0,
-        "Strength": 0.5
-      },
-      "Deadzone": 0.0,
-      "Type": 0,
-      "Condition": [],
-      "Math": []
-    },
-    {
-      "Constant": false,
-      "Input_index": 7,
-      "Output_index": 1,
-      "MultiplierPos": 3.0,
-      "MultiplierNeg": 3.0,
-      "Offset": 0.0,
-      "Inverse": true,
-      "Limit": -1.0,
-      "Smoothing": 1.0,
-      "Enabled": true,
-      "Spikeflatter": {
-        "Enabled": false,
-        "Limit": 100.0,
-        "Strength": 0.5
-      },
-      "Deadzone": 0.0,
-      "Type": 1,
-      "Condition": [],
-      "Math": []
-    },
-    {
-      "Constant": true,
-      "Input_index": 11,
-      "Output_index": 4,
-      "MultiplierPos": 19.0,
-      "MultiplierNeg": 19.0,
-      "Offset": 0.0,
-      "Inverse": false,
-      "Limit": -1.0,
-      "Smoothing": 1.0,
-      "Enabled": false,
-      "Spikeflatter": {
-        "Enabled": false,
-        "Limit": 100.0,
-        "Strength": 0.5
-      },
-      "Deadzone": 0.0,
-      "Type": 0,
-      "Condition": [],
-      "Math": []
-    },
-    {
-      "Constant": false,
-      "Input_index": 0,
-      "Output_index": 3,
-      "MultiplierPos": 0.002,
-      "MultiplierNeg": 0.002,
-      "Offset": 0.0,
-      "Inverse": false,
-      "Limit": 28.0,
-      "Smoothing": 1.0,
-      "Enabled": true,
-      "Spikeflatter": {
-        "Enabled": false,
-        "Limit": 100.0,
-        "Strength": 0.5
-      },
-      "Deadzone": 0.0,
-      "Type": 0,
-      "Condition": [],
-      "Math": []
-    },
-    {
-      "Constant": false,
-      "Input_index": 5,
-      "Output_index": 2,
-      "MultiplierPos": 5.0,
-      "MultiplierNeg": 5.0,
-      "Offset": 0.0,
-      "Inverse": true,
-      "Limit": -1.0,
-      "Smoothing": 0.69765866,
-      "Enabled": true,
-      "Spikeflatter": {
-        "Enabled": false,
-        "Limit": 100.0,
-        "Strength": 0.5
-      },
-      "Deadzone": 0.0,
-      "Type": 0,
-      "Condition": [],
-      "Math": []
-    },
-    {
-      "Constant": false,
-      "Input_index": 8,
-      "Output_index": 0,
-      "MultiplierPos": 1.0,
-      "MultiplierNeg": 1.0,
-      "Offset": 0.0,
-      "Inverse": false,
-      "Limit": -1.0,
-      "Smoothing": 1.0,
-      "Enabled": true,
-      "Spikeflatter": {
-        "Enabled": false,
-        "Limit": 100.0,
-        "Strength": 0.5
-      },
-      "Deadzone": 0.0,
-      "Type": 0,
-      "Condition": [],
-      "Math": []
-    },
-    {
-      "Constant": false,
-      "Input_index": 9,
-      "Output_index": 1,
-      "MultiplierPos": 1.0,
-      "MultiplierNeg": 1.0,
-      "Offset": 0.0,
-      "Inverse": true,
-      "Limit": -1.0,
-      "Smoothing": 1.0,
-      "Enabled": true,
-      "Spikeflatter": {
-        "Enabled": false,
-        "Limit": 100.0,
-        "Strength": 0.5
-      },
-      "Deadzone": 0.0,
-      "Type": 0,
-      "Condition": [],
-      "Math": []
-    },
-    {
-      "Constant": false,
-      "Input_index": 10,
-      "Output_index": 2,
-      "MultiplierPos": 1.0,
-      "MultiplierNeg": 1.0,
-      "Offset": 0.0,
-      "Inverse": false,
-      "Limit": -1.0,
-      "Smoothing": 1.0,
-      "Enabled": true,
-      "Spikeflatter": {
-        "Enabled": false,
-        "Limit": 100.0,
-        "Strength": 0.5
-      },
-      "Deadzone": 0.0,
-      "Type": 0,
-      "Condition": [],
-      "Math": []
-    },
-    {
-      "Constant": false,
-      "Input_index": 6,
-      "Output_index": 1,
-      "MultiplierPos": 8.183292,
-      "MultiplierNeg": 8.183292,
-      "Offset": 0.0,
-      "Inverse": false,
-      "Limit": -1.0,
-      "Smoothing": 1.0,
-      "Enabled": false,
-      "Spikeflatter": {
-        "Enabled": false,
-        "Limit": 100.0,
-        "Strength": 0.5
-      },
-      "Deadzone": 0.0,
-      "Type": 0,
-      "Condition": [],
-      "Math": []
-    }
-  ],
-  "Effects": {
-    "EffectID": 0,
-    "InputID": 0,
-    "Multiplier": 0.004,
-    "Colors": [
-      {
-        "R": 255,
-        "G": 40,
-        "B": 0
-      },
-      {
-        "R": 80,
-        "G": 80,
-        "B": 80
-      },
-      {
-        "R": 255,
-        "G": 100,
-        "B": 0
-      },
-      {
-        "R": 140,
-        "G": 0,
-        "B": 255
-      }
-    ]
-  },
-  "Functions": []
+    "Functions": []
 }

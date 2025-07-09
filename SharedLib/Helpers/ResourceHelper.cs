@@ -41,5 +41,15 @@ namespace SharedLib
 
             return result;
         }
+
+        public static string Description => GetString("description.html");
+
+        public static Stream Logo => GetStream("logo.png");
+
+        public static Stream SmallLogo => GetStream("recent.png");
+
+        public static Stream Background => GetStream("wide.png");
+
+        public static string DefaultProfile => GetString("Default.yawglprofile");
     }
 }

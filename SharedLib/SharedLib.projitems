@@ -9,7 +9,20 @@
     <Import_RootNamespace>SharedLib</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)GameFinders\IGameFinder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameFinders\YawGameFinder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\DownloadHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\GithubHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\IniHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\InputHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MathsF.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ResourceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ResourceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Patchers\Patcher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Patchers\UnityPatcher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TelemetryHelper\MmfTelemetry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TelemetryHelper\TelemetryBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TelemetryHelper\UdpTelemetry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validator.cs" />
   </ItemGroup>
 </Project>

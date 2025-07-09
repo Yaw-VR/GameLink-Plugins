@@ -17,7 +17,7 @@ namespace GT7Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Gran Turismo 7")]
-    [ExportMetadata("Version", "1.2")]
+    [ExportMetadata("Version", "1.3")]
     public class GT7Plugin : Game
     {
         private IProfileManager controller;
@@ -177,7 +177,7 @@ namespace GT7Plugin
 
         public Type GetConfigBody()
         {
-            throw new NotImplementedException();
+            return typeof(Config);
         }
     }
 }

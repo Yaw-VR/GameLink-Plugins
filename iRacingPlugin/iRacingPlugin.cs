@@ -11,7 +11,7 @@ using YawGLAPI;
 namespace YawVR_Game_Engine.Plugin {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "iRacing")]
-    [ExportMetadata("Version", "1.0")]
+    [ExportMetadata("Version", "1.1")]
     public class iRacingPlugin : Game {
 
         private Thread readthreade;
@@ -66,7 +66,8 @@ namespace YawVR_Game_Engine.Plugin {
             return new string[] {
                 "Yaw","Pitch","Roll","RPM","Speed","Acc_vertical","Acc_long","Acc_lateral","Velocity_x","Velocity_y","Velocity_z",
                 "L-FrontShockDeflection","R-FrontShockDeflection","L-RearShockDeflection","R-RearShockDeflection",
-                "L-Front_shock_Velocity","R-Front_shock_Velocity","L-Rear_shock_Velocity","R-Rear_shock_Velocity"
+                "L-Front_shock_Velocity","R-Front_shock_Velocity","L-Rear_shock_Velocity","R-Rear_shock_Velocity",
+                "C-FrontShockDeflection","C-RearShockDeflection","C-Front_shock_Velocity","C-Rear_shock_Velocity"
             };
 
         }
@@ -115,6 +116,10 @@ namespace YawVR_Game_Engine.Plugin {
                         controller.SetInput(16, data.Telemetry.RFshockVel);
                         controller.SetInput(17, data.Telemetry.LRshockVel);
                         controller.SetInput(18, data.Telemetry.RRshockVel);
+                        controller.SetInput(19, data.Telemetry.CFshockDefl);
+                        controller.SetInput(20, data.Telemetry.CRshockDefl);
+                        controller.SetInput(21, data.Telemetry.CFshockVel);
+                        controller.SetInput(22, data.Telemetry.CRshockVel);
 
 
 

@@ -9,7 +9,7 @@ namespace GT7Plugin
     public class UDPListener
     {
         public delegate void PacketReceived(object sender, byte[] buffer);
-        private int targetPort = 33739;
+        private int heartBeatPort = 33739;
 
         private UdpClient udpClient;
         private IPEndPoint remoteEndPoint;
@@ -28,7 +28,7 @@ namespace GT7Plugin
             if (port == 33740) {
                 // only send heartbeats if we are listening on the default port,
                 // otherwise the data is coming from localhost which is NOT the playstation.
-                remoteEndPoint = new IPEndPoint(IPAddress.Broadcast, targetPort);
+                remoteEndPoint = new IPEndPoint(IPAddress.Broadcast, heartBeatPort);
 
                 hbTimer = new Timer(TimeSpan.FromSeconds(1));
                 hbTimer.Elapsed += SendHeartbeat;
@@ -47,7 +47,8 @@ namespace GT7Plugin
 
                     OnPacketReceived.Invoke(this,res.Buffer);
                 }
-            } catch(OperationCanceledException)
+            } 
+            catch(OperationCanceledException)
             {
             }
         }

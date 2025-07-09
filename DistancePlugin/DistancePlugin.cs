@@ -18,49 +18,44 @@ namespace YawVR_Game_Engine.Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Distance")]
-    [ExportMetadata("Version", "1.5")]
+    [ExportMetadata("Version", "1.6")]
 
     public class DistancePlugin : Game
     {
 
+        #region Standard Properties
+
+        public int STEAM_ID => 233610;
+        public string PROCESS_NAME => "Distance";
+        public string AUTHOR => "Trevor Jones (Drowhunter)";
+
+        public bool PATCH_AVAILABLE => true;
+
+        public string Description => ResourceHelper.Description;
+        public Stream Logo => ResourceHelper.Logo;
+        public Stream SmallLogo => ResourceHelper.SmallLogo;
+        public Stream Background => ResourceHelper.Background;
+
+        public List<Profile_Component> DefaultProfile() => dispatcher.JsonToComponents(ResourceHelper.DefaultProfile);
+
+        public string[] GetInputData() => InputHelper.GetValues<DistanceTelemetryData>(default).Keys();
+
+        public LedEffect DefaultLED() => new(EFFECT_TYPE.KNIGHT_RIDER, 0, [YawColor.WHITE], 0);
 
 
-        private UdpTelemetry<DistanceTelemetryData> telem;
+        #endregion
+        private Config settings;
+        private IDeviceParameters deviceParameters;
+
+
+        private UdpTelemetry<DistanceTelemetryData> telemetry;
         private Thread readThread;
         private IMainFormDispatcher dispatcher;
         private IProfileManager controller;
+
+
         private volatile bool running = false;
-        public int STEAM_ID => 233610;
-        public string PROCESS_NAME => "Distance";
-        public string AUTHOR => "Trevor Jones";
 
-        public bool PATCH_AVAILABLE => false;
-
-        public string Description => ResourceHelper.GetString("description.html");
-        public Stream Logo => ResourceHelper.GetStream("logo.png");
-        public Stream SmallLogo => ResourceHelper.GetStream("recent.png");
-        public Stream Background => ResourceHelper.GetStream("wide.png");
-        private string defProfile => ResourceHelper.GetString("Default.yawglprofile");
-
-        IDeviceParameters deviceParameters;
-
-
-
-        public void Exit()
-        {
-            running = false;
-            telem?.Dispose();
-        }
-        public void PatchGame()
-        {
-            return;
-        }
-
-
-        public string[] GetInputData() => InputHelper.GetInputs<DistanceTelemetryData>(default).Select(_ => _.key).ToArray();
-
-        public LedEffect DefaultLED() => new(EFFECT_TYPE.KNIGHT_RIDER, 0, [YawColor.WHITE], 0);
-        public List<Profile_Component> DefaultProfile() => dispatcher.JsonToComponents(defProfile);
 
 
         public void SetReferences(IProfileManager controller, IMainFormDispatcher dispatcher)
@@ -72,18 +67,20 @@ namespace YawVR_Game_Engine.Plugin
 
         public void Init()
         {
+            this.settings = dispatcher.GetConfigObject<Config>();
             deviceParameters = dispatcher.GetDeviceParameters();
             running = true;
             readThread = new Thread(new ThreadStart(ReadThread));
             readThread.Start();
         }
+
         private void ReadThread()
         {
             try
             {
-                telem = new UdpTelemetry<DistanceTelemetryData>(new UdpTelemetryConfig
+                telemetry = new UdpTelemetry<DistanceTelemetryData>(new UdpTelemetryConfig
                 {
-                    ReceiveAddress = new IPEndPoint(IPAddress.Any, 12345)
+                    ReceiveAddress = new IPEndPoint(IPAddress.Parse(settings.IP), settings.Port)
                 });
 
             }
@@ -97,13 +94,13 @@ namespace YawVR_Game_Engine.Plugin
             {
                 try
                 {
-                    var data = telem.Receive();
+                    var data = telemetry.Receive();
 
                     if (data.IsCarIsActive)
                     {
                         if (!isRestting)
                         {
-                            foreach (var (i, (key, value)) in InputHelper.GetInputs(data).WithIndex())
+                            foreach (var (i, key, value) in InputHelper.GetValues(data).WithIndex())
                             {
                                 var nv = 0f;
 
@@ -142,28 +139,46 @@ namespace YawVR_Game_Engine.Plugin
         bool isRestting = false;
 
 
+        CancellationTokenSource cts = new CancellationTokenSource();
 
         public Dictionary<string, ParameterInfo[]> GetFeatures() => null;
 
-        public Type GetConfigBody()
+        public Type GetConfigBody() => typeof(Config);
+
+        public void Exit()
         {
-            return null;
+            running = false;
+            cts.Cancel();
+            telemetry?.Dispose();
         }
-    }
 
-    static class Extensions
-    {
+       
 
-
-        public static IEnumerable<(int index, T value)> WithIndex<T>(this IEnumerable<T> source)
+        public async void PatchGame()
         {
-            int index = 0;
-            foreach (var item in source)
+#if DEBUG
+            Debugger.Launch();
+#endif
+
+            await UnityPatcher.Create<UnityPatcher>(this, dispatcher, options =>
             {
-                yield return (index, item);
-                index++;
-            }
+                //options.GameInstallPath = installPath;
+                options.ModType = ModType.BepInEx5_x64;
+                options.PluginName = "DistanceTelemetryMod";
+                options.DoorStopPath = "";
+                options.Repository = new GithubOptions
+                {
+                    UsernameOrOrganization = "Unity-Telemetry-Mods",
+                    Repository = "Distance-TelemetryMod"
+                };                
+            }).PatchAsync(cts.Token);
+            
+            
+           
         }
+
     }
+
+    
 
 }

@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Instructions</title>
+    <style type="text/css">
+        
+        li {
+            margin:10px unset;
+        }
+        a, a:visited {
+            color: #37E5DB;
+        }
+        code {
+            display: block;
+            background-color: black;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 5px;
+        }
+        .collapse {
+            display: block;
+            max-height: 0px;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+        }
+
+            .collapse.show {
+                max-height: 99em;
+                transition: max-height 0.5s ease-in-out;
+            }
+
+        .block {
+            margin-top: 10px;
+            background: #f5f5f5;
+            padding: 0;
+        }
+
+        .block__content {
+            border: 1px solid #ccc;
+            padding: 1.5em;
+            height: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <h3>Easy Install</h3>
+    <ol>
+        <li>Follow Steps 1-3 for UUVR insallation</li>
+        <l1>Then Click the <b>Patch Game</b> button and Enjoy</l1>
+    </ol>
+
+    <h3>Normal Install (no VR)</h3>
+    <ol>
+        <li>
+            Download Telemetry Mod <a href="https://github.com/Unity-Telemetry-Mods/NewStarGP-TelemetryMod/releases/latest">here</a>
+        </li>
+        <li>Install BepinEx v5 into your game folder. (<a href="https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.2">click here</a>)</li>
+        <li>Place plugin dll file from step 1 into <b>[GameDir]/release/BepinEx/plugins</b> folder</li>
+    </ol>
+
+    <h3>UUVR install</h3>
+    <ol>
+        <li>Download RaiPal. (<a href="https://github.com/Raicuparta/rai-pal/releases">click here</a>)</li>
+        <li>Scan for your games and then click on New Star GP.</li>
+        <li>Install <strong>UUVR Mono Modern</strong> <i>(which includes BepinEx)</i></li>
+        <li>
+            Install Telemetry Mod
+            <ol>
+                <li style="list-style-type: lower-alpha">Click the 3 dots next to <strong>UUVR Mono Modern</strong></li>
+                <li>
+                    Click <b>Open Mod Folder</b> button<br /><br /><i>The folder path should be something like: </i>
+                    <code>%APPDATA%\raicuparta\rai-pal\data\installed-mods\[ModId]\</code>
+                </li>
+
+            </ol>
+        </li>
+        <li>Place Telemetry Mod dll into <b>[UUVR_Mod_Folder]/BepinEx/plugins</b> folder.</li>
+
+    </ol>
+    <h5>Note: The default profile was tuned with Yaw set to 15 degrees limit on pitch and roll</h5>
+    <h5>Press F5 in game for mod options</h5>
+    <small>Version 1.0.0</small>
+</body>
+</html>

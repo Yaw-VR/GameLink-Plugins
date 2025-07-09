@@ -17,7 +17,7 @@ namespace ACEPlugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Assetto Corsa Evo")]
-    [ExportMetadata("Version", "1.1")]
+    [ExportMetadata("Version", "1.2")]
 
     public class ACEPlugin : Game
     {
@@ -144,10 +144,10 @@ namespace ACEPlugin
                 controller.SetInput(26, p.LocalAngularVelocity[1]);
                 controller.SetInput(27, p.LocalAngularVelocity[2]);
 
-                controller.SetInput(25, p.SuspensionTravel[0]);
-                controller.SetInput(26, p.SuspensionTravel[1]);
-                controller.SetInput(27, p.SuspensionTravel[2]);
-                controller.SetInput(28, p.SuspensionTravel[2]);
+                controller.SetInput(28, p.SuspensionTravel[0]);
+                controller.SetInput(29, p.SuspensionTravel[1]);
+                controller.SetInput(30, p.SuspensionTravel[2]);
+                controller.SetInput(31, p.SuspensionTravel[2]);
 
                 Thread.Sleep(20);
             }
