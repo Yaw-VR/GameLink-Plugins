@@ -93,7 +93,7 @@ namespace YawVR_Game_Engine.Plugin
         public void Init()
         {
 
-
+            
             tokenSource = new();
             this.settings = dispatcher.GetConfigObject<Config>();
             running = true;
@@ -150,7 +150,7 @@ namespace YawVR_Game_Engine.Plugin
 
         public async void PatchGame()
         {
-
+            
 
             var patcher = UnityPatcher.Create<UnityPatcher>(this, dispatcher, options =>
             {
@@ -164,9 +164,12 @@ namespace YawVR_Game_Engine.Plugin
                 };
             });
 
+            CancellationTokenSource tk = new (TimeSpan.FromSeconds(600));
 
-
-            await patcher.PatchAsync(tokenSource.Token);
+#if DEBUG
+            Debugger.Launch();
+#endif
+            await patcher.PatchAsync(tk.Token);
 
 
 

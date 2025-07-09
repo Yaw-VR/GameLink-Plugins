@@ -83,7 +83,7 @@ namespace RedOutPlugin
             while (running) {
                 Packet p = ReadPacket();
 
-                Quaternion quater = new Quaternion(p.QuatX,p.QuatY,p.QuatZ,p.QuatZ);
+                Quaternion quater = new Quaternion(p.QuatX,p.QuatY,p.QuatZ,p.QuatW);
               
                 float roll = (float)RadianToDegree(quater.toYawFromYUp()) * -1;
                 float pitch = (float)RadianToDegree(quater.toPitchFromYUp()) * -1;
