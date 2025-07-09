@@ -6,6 +6,7 @@ using SharedLib;
 
 using System.ComponentModel.Composition;
 using System.Diagnostics;
+using System.Net.Sockets;
 using System.Numerics;
 using System.Reflection;
 
@@ -17,9 +18,11 @@ namespace GT7Plugin
 {
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Gran Turismo 7")]
-    [ExportMetadata("Version", "1.3")]
+    [ExportMetadata("Version", "1.4")]
     public class GT7Plugin : Game
     {
+        #region Standard Properties
+
         private IProfileManager controller;
         private IMainFormDispatcher dispatcher;
 
@@ -33,90 +36,57 @@ namespace GT7Plugin
 
         public string AUTHOR => "Trevor Jones";
 
-        public Stream Logo => ResourceHelper.GetStream("logo.png");
+        public string Description => ResourceHelper.Description;
+        public Stream Logo => ResourceHelper.Logo;
+        public Stream SmallLogo => ResourceHelper.SmallLogo;
+        public Stream Background => ResourceHelper.Background;
 
-        public Stream SmallLogo => ResourceHelper.GetStream("recent.png");
+        public List<Profile_Component> DefaultProfile() => dispatcher.JsonToComponents(ResourceHelper.DefaultProfile);
+        public LedEffect DefaultLED() => new LedEffect(EFFECT_TYPE.KNIGHT_RIDER, 0, [YawColor.WHITE], 0);
+        public Dictionary<string, ParameterInfo[]> GetFeatures() => null;
 
-        public Stream Background => ResourceHelper.GetStream("wide.png");
+        public Type GetConfigBody() => typeof(Config);
 
-        public string Description => ResourceHelper.GetString("description.html");
+        private Config settings;
 
-        private string defProfilejson => ResourceHelper.GetString("Default.yawglprofile");
+        #endregion
+
+        private UDPListener listener;
+        
+        public void Exit() => listener?.Stop();
+
+        public string[] GetInputData() => InputHelper.GetValues<GT7Output>(default).Keys();
 
         
 
-        public LedEffect DefaultLED() => dispatcher.JsonToLED(defProfilejson);
-
-        public List<Profile_Component> DefaultProfile() => dispatcher.JsonToComponents(defProfilejson);
-
-        private UDPListener listener;
-        private Cryptor cryptor;
-        private FieldInfo[] fields = typeof(GT7Output).GetFields();
-        private bool _seenPacket = false;
-        private Vector3 _previous_local_velocity = new Vector3(0, 0, 0);
-        private const float _samplerate = 1 / 60f;
-
-
-        public void Exit() => listener?.Stop();
-
-        public Dictionary<string, ParameterInfo[]> GetFeatures() => new();
-
-        public string[] GetInputData() => fields.Select(f => f.Name).ToArray();
-
-        private int inputPort = 33740;
-
         public void Init()
         {
-
-
-            inputPort = dispatcher.GetConfigObject<Config>().Port;
-            listener = new UDPListener(inputPort);
-            cryptor = new Cryptor();
+            this.settings = dispatcher.GetConfigObject<Config>();
+            listener = new UDPListener(SimInterfacePacketType.PacketType2, settings.Port);
             listener.OnPacketReceived += Listener_OnPacketReceived;
             suspStopwatch.Restart();
         }
 
         private void Listener_OnPacketReceived(object sender, byte[] buffer)
         {
-            cryptor.Decrypt(buffer);
             var sp = new SimulatorPacket();
             sp.Read(buffer);
 
-            if (sp.Flags.HasFlag(SimulatorFlags.CarOnTrack) && !sp.Flags.HasFlag(SimulatorFlags.Paused) && !sp.Flags.HasFlag(SimulatorFlags.LoadingOrProcessing))
+            // after race finishes game still sends telemetry, checking the laps to detect when actually racing  
+            bool preRace = sp.LapsInRace == 0 && sp.LapCount == 0;
+            bool raceFinished = sp.LapCount > sp.LapsInRace;
+            bool inRace = !preRace && !raceFinished;
+            
+            if (inRace && sp.Flags.HasFlag(SimulatorFlags.CarOnTrack) && !sp.Flags.HasFlag(SimulatorFlags.Paused) && !sp.Flags.HasFlag(SimulatorFlags.LoadingOrProcessing))
             {
                 ReadFunction(sp);
-
             }
-
-            _seenPacket = _seenPacket || true;
-
         }
 
         private void ReadFunction(SimulatorPacket sp)
         {
-            var Q = new Quaternion(new Vector3(sp.RotationX, sp.RotationY, sp.RotationZ), sp.RelativeOrientationToNorth);
-            var local_velocity = Maths.WorldtoLocal(Q, new Vector3(sp.VelocityX, sp.VelocityY, sp.VelocityZ));
-
-
-            var sway = CalculateCentripetalAcceleration(local_velocity, new Vector3(sp.AngularVelocityX, sp.AngularVelocityY, sp.AngularVelocityZ));
-            var surge = 0f;
-            var heave = 0f;
-
-            if (_seenPacket)
-            {
-                var delta_velocity = local_velocity - _previous_local_velocity;
-
-                surge = delta_velocity.Z / _samplerate / 9.81f;
-                heave = delta_velocity.Y / _samplerate / 9.81f;
-            }
-
-
-
-            _previous_local_velocity = local_velocity;
-
-
-            var (pitch, yaw, roll) = Q.ToPitchYawRoll(); // Q.ToEuler(true);
-
+           
+            var (pitch, yaw, roll) = sp.Rotation.ToPitchYawRoll();
 
             bool updateSusp = false;
 
@@ -129,17 +99,19 @@ namespace GT7Plugin
             var output = new GT7Output()
             {
                 Yaw = yaw,
-                Pitch = pitch,
+                Pitch = -pitch,
                 Roll = roll,
-                Sway = sway,
-                Surge = surge,
-                Heave = heave,
+                Sway = sp.Sway ?? 0f,
+                Surge = -sp.Surge ?? 0f,
+                Heave = sp.Heave ?? 0f,
                 Kph = sp.MetersPerSecond * 3.6f,
                 MaxKph = sp.CalculatedMaxSpeed * 3.6f,
                 RPM = sp.EngineRPM,                
                 OnTrack = sp.Flags.HasFlag(SimulatorFlags.CarOnTrack) ? 1 : 0,
                 IsPaused = sp.Flags.HasFlag(SimulatorFlags.Paused) ? 1 : 0,
-                Loading = sp.Flags.HasFlag(SimulatorFlags.LoadingOrProcessing) ? 1 : 0
+                Loading = sp.Flags.HasFlag(SimulatorFlags.LoadingOrProcessing) ? 1 : 0,
+                InRace = sp.LapsInRace > 0 ? 1 : 0,
+                CentripetalAcceleration = CalculateCentripetalAcceleration(Maths.WorldtoLocal(sp.Rotation, sp.Velocity), sp.AngularVelocity)
             };
 
             if (updateSusp)
@@ -150,10 +122,10 @@ namespace GT7Plugin
                 output.TireRR_SusHeight = sp.TireRR_SusHeight;
             }
 
-            for (int i = 0; i < fields.Length; i++)
-            {
-                controller.SetInput(i, Convert.ToSingle(fields[i].GetValue(output)));
-            }
+            
+            foreach (var (i, key, value) in InputHelper.GetValues(output).WithIndex())
+                controller.SetInput(i, value);
+
         }
 
         public void PatchGame()
@@ -175,9 +147,6 @@ namespace GT7Plugin
 
         }
 
-        public Type GetConfigBody()
-        {
-            return typeof(Config);
-        }
+       
     }
 }
