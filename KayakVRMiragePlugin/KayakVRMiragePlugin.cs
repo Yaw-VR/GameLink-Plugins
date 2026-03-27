@@ -1,5 +1,4 @@
 using SharedLib;
-using SharedLib.TelemetryHelper;
 
 using System;
 using System.Collections.Generic;
@@ -40,7 +39,7 @@ namespace KayakVRMiragePlugin
         #endregion
 
         private Config settings;
-        private UdpTelemetry<SRSPacket> telemetry;
+        private UdpClient udpClient;
         private Thread readThread;
         private IMainFormDispatcher dispatcher;
         private IProfileManager controller;
@@ -57,6 +56,7 @@ namespace KayakVRMiragePlugin
             settings = dispatcher.GetConfigObject<Config>();
             running = true;
             readThread = new Thread(new ThreadStart(ReadThread));
+            readThread.IsBackground = true;
             readThread.Start();
         }
 
@@ -64,23 +64,24 @@ namespace KayakVRMiragePlugin
         {
             try
             {
-                telemetry = new UdpTelemetry<SRSPacket>(new UdpTelemetryConfig
-                {
-                    ReceiveAddress = new IPEndPoint(IPAddress.Any, settings.Port)
-                }, new MarshalByteConverter<SRSPacket>());
+                udpClient = new UdpClient(settings.Port);
+                udpClient.Client.ReceiveTimeout = 500;
             }
-            catch (System.Exception x)
+            catch (Exception x)
             {
                 dispatcher.ShowNotification(NotificationType.ERROR, x.Message);
                 Exit();
                 return;
             }
 
+            IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);
+
             while (running)
             {
                 try
                 {
-                    var data = telemetry.Receive();
+                    byte[] rawData = udpClient.Receive(ref remoteEP);
+                    var data = SRSPacket.FromBytes(rawData);
 
                     foreach (var (i, _, value) in InputHelper.GetValues(data).WithIndex())
                     {
@@ -94,7 +95,8 @@ namespace KayakVRMiragePlugin
         public void Exit()
         {
             running = false;
-            telemetry?.Dispose();
+            udpClient?.Close();
+            udpClient = null;
         }
 
         public void PatchGame() { }
