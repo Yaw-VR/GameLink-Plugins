@@ -1,5 +1,7 @@
 using System;
 
+using SharedLib.TelemetryHelper;
+
 namespace KayakVRMiragePlugin
 {
     /// <summary>
@@ -17,10 +19,16 @@ namespace KayakVRMiragePlugin
         public float Roll;
         public float Extra1;
         public float Extra2;
+    }
 
+    /// <summary>
+    /// Extracts the SRS motion block from the last 32 bytes of the raw UDP payload.
+    /// </summary>
+    internal class SRSPacketConverter : IByteConverter<SRSPacket>
+    {
         private const int MotionBlockSize = 32; // 8 floats × 4 bytes
 
-        public static SRSPacket FromBytes(byte[] data)
+        public SRSPacket FromBytes(byte[] data)
         {
             if (data.Length < MotionBlockSize)
                 return default;
@@ -38,5 +46,7 @@ namespace KayakVRMiragePlugin
                 Extra2 = BitConverter.ToSingle(data, offset + 28),
             };
         }
+
+        public byte[] ToBytes(SRSPacket data) => Array.Empty<byte>();
     }
 }

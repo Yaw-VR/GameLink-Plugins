@@ -1,4 +1,5 @@
 using SharedLib;
+using SharedLib.TelemetryHelper;
 
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace KayakVRMiragePlugin
         #endregion
 
         private Config settings;
-        private UdpClient udpClient;
+        private UdpTelemetry<SRSPacket> telemetry;
         private Thread readThread;
         private IMainFormDispatcher dispatcher;
         private IProfileManager controller;
@@ -64,8 +65,10 @@ namespace KayakVRMiragePlugin
         {
             try
             {
-                udpClient = new UdpClient(settings.Port);
-                udpClient.Client.ReceiveTimeout = 500;
+                telemetry = new UdpTelemetry<SRSPacket>(new UdpTelemetryConfig
+                {
+                    ReceiveAddress = new IPEndPoint(IPAddress.Any, settings.Port)
+                }, new SRSPacketConverter());
             }
             catch (Exception x)
             {
@@ -74,14 +77,11 @@ namespace KayakVRMiragePlugin
                 return;
             }
 
-            IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);
-
             while (running)
             {
                 try
                 {
-                    byte[] rawData = udpClient.Receive(ref remoteEP);
-                    var data = SRSPacket.FromBytes(rawData);
+                    var data = telemetry.Receive();
 
                     foreach (var (i, _, value) in InputHelper.GetValues(data).WithIndex())
                     {
@@ -95,8 +95,7 @@ namespace KayakVRMiragePlugin
         public void Exit()
         {
             running = false;
-            udpClient?.Close();
-            udpClient = null;
+            telemetry?.Dispose();
         }
 
         public void PatchGame() { }
