@@ -1,0 +1,82 @@
+{
+    "GameName": "Kayak VR: Mirage",
+    "Name": "Default",
+    "Components": [
+        {
+            "Constant": false,
+            "Input_index": 3,
+            "Output_index": 0,
+            "MultiplierPos": 1,
+            "MultiplierNeg": 1,
+            "Offset": 0,
+            "Inverse": false,
+            "Limit": -1,
+            "Smoothing": 1,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100,
+                "Strength": 0.5
+            },
+            "Deadzone": 0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 4,
+            "Output_index": 1,
+            "MultiplierPos": 1,
+            "MultiplierNeg": 1,
+            "Offset": 0,
+            "Inverse": false,
+            "Limit": -1,
+            "Smoothing": 1,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100,
+                "Strength": 0.5
+            },
+            "Deadzone": 0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        },
+        {
+            "Constant": false,
+            "Input_index": 5,
+            "Output_index": 2,
+            "MultiplierPos": 1,
+            "MultiplierNeg": 1,
+            "Offset": 0,
+            "Inverse": false,
+            "Limit": -1,
+            "Smoothing": 1,
+            "Enabled": true,
+            "Spikeflatter": {
+                "Enabled": false,
+                "Limit": 100,
+                "Strength": 0.5
+            },
+            "Deadzone": 0,
+            "Type": 0,
+            "Condition": [],
+            "Math": []
+        }
+    ],
+    "Effects": {
+        "EffectID": 0,
+        "InputID": 0,
+        "Multiplier": 0,
+        "Colors": [
+            {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            }
+        ]
+    },
+    "Functions": []
+}

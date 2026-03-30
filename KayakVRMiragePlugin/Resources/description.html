@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayak VR: Mirage</title>
+    <style type="text/css">
+        li {
+            margin: 10px unset;
+        }
+        a, a:visited {
+            color: #37E5DB;
+        }
+    </style>
+</head>
+<body>
+    <h3>Kayak VR: Mirage</h3>
+    <p>
+        Kayak VR: Mirage outputs motion data natively over UDP on port <b>33001</b> using the
+        SRS (SimRacingStudio) Motion Output Format. No patching or additional software is required.
+    </p>
+    <h3>Setup</h3>
+    <ol>
+        <li>Launch Kayak VR: Mirage.</li>
+        <li>Start the plugin in GameLink – it will automatically receive telemetry on port 33001.</li>
+    </ol>
+    <h3>Data Channels</h3>
+    <ul>
+        <li><b>Heave</b> – Vertical acceleration</li>
+        <li><b>Sway</b> – Lateral acceleration</li>
+        <li><b>Surge</b> – Longitudinal acceleration</li>
+        <li><b>Yaw</b> – Rotation around the vertical axis</li>
+        <li><b>Pitch</b> – Rotation around the lateral axis</li>
+        <li><b>Roll</b> – Rotation around the longitudinal axis</li>
+        <li><b>Extra1–Extra6</b> – Additional game-specific channels</li>
+    </ul>
+    <small>Version 1.0.0</small>
+</body>
+</html>
