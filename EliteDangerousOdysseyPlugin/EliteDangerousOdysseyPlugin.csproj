@@ -16,6 +16,11 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Properties\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="EliteDangerous64_Offsets.xml" />
     <None Remove="Resources\Default.yawglprofile" />
     <None Remove="Resources\description.html" />
@@ -44,9 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YawGLAPI\YawGLAPI.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="..\SharedLib\SharedLib.projitems" Label="Shared" />
 </Project>
