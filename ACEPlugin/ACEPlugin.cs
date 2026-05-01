@@ -21,6 +21,12 @@ namespace ACEPlugin
 
     public class ACEPlugin : Game
     {
+        private const float RadiansToDegrees = 57.2957795f;
+        private static readonly string[] PhysicsMmfNames =
+        {
+            "Local\\acevo_pmf_physics",
+            "Local\\acpmf_physics",
+        };
 
       
         private MemoryMappedFile mmf;
@@ -58,6 +64,9 @@ namespace ACEPlugin
         public void Exit()
         {
             running = false;
+            readThread?.Join(3000);
+            mmf?.Dispose();
+            mmf = null;
         }
         public string[] GetInputData()
         {
@@ -98,7 +107,7 @@ namespace ACEPlugin
 
         private void ReadThread()
         {
-            while (!OpenMMF())
+            while (running && !OpenMMF())
             {
                 Console.WriteLine("Cant connect to MMF, trying again..");
                 Thread.Sleep(2000);
@@ -118,13 +127,13 @@ namespace ACEPlugin
                 controller.SetInput(6, p.AccG[1]);
                 controller.SetInput(7, p.AccG[2]);
 
-                controller.SetInput(8, p.Heading * 57.2957795f);
-                controller.SetInput(9, p.Pitch * 57.2957795f);
-                controller.SetInput(10, p.Roll * 57.2957795f);
+                controller.SetInput(8, p.Heading * RadiansToDegrees);
+                controller.SetInput(9, p.Pitch * RadiansToDegrees);
+                controller.SetInput(10, p.Roll * RadiansToDegrees);
 
                 controller.SetInput(11, p.LocalVelocity[0]);
-                controller.SetInput(12, p.LocalVelocity[0]);
-                controller.SetInput(13, p.LocalVelocity[0]);
+                controller.SetInput(12, p.LocalVelocity[1]);
+                controller.SetInput(13, p.LocalVelocity[2]);
 
                 controller.SetInput(14,p.WheelSlip[0]);
                 controller.SetInput(15,p.WheelSlip[1]);
@@ -147,7 +156,7 @@ namespace ACEPlugin
                 controller.SetInput(28, p.SuspensionTravel[0]);
                 controller.SetInput(29, p.SuspensionTravel[1]);
                 controller.SetInput(30, p.SuspensionTravel[2]);
-                controller.SetInput(31, p.SuspensionTravel[2]);
+                controller.SetInput(31, p.SuspensionTravel[3]);
 
                 Thread.Sleep(20);
             }
@@ -157,15 +166,21 @@ namespace ACEPlugin
 
         private bool OpenMMF()
         {
-            try
+            foreach (var mmfName in PhysicsMmfNames)
             {
-                mmf = MemoryMappedFile.OpenExisting("Local\\acpmf_physics");
-                return true;
+                try
+                {
+                    mmf?.Dispose();
+                    mmf = MemoryMappedFile.OpenExisting(mmfName);
+                    Console.WriteLine($"Connected to shared memory: {mmfName}");
+                    return true;
+                }
+                catch (FileNotFoundException)
+                {
+                }
             }
-            catch (FileNotFoundException)
-            {
-                return false;
-            }
+
+            return false;
         }
 
 
@@ -182,10 +197,20 @@ namespace ACEPlugin
                 {
                     var size = Marshal.SizeOf(typeof(Physics));
                     var bytes = reader.ReadBytes(size);
+                    if (bytes.Length < size)
+                    {
+                        throw new EndOfStreamException($"Could not read the full ACE physics page. Expected {size} bytes, got {bytes.Length}.");
+                    }
+
                     var handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-                    var data = (Physics)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(Physics));
-                    handle.Free();
-                    return data;
+                    try
+                    {
+                        return Marshal.PtrToStructure<Physics>(handle.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        handle.Free();
+                    }
                 }
             }
         }
