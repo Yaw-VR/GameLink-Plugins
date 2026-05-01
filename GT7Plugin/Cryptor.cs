@@ -13,15 +13,28 @@ namespace GT7Plugin
     /// <summary>
     /// Used to decrypt packets from GT7's Simulator Interface.
     /// </summary>
-    public class Cryptor
+    public class SimulatorInterfaceCryptorGT7
     {
         private Salsa20 _salsa;
 
         public const string Key = "Simulator Interface Packet GT7 ver 0.0";
 
-        public Cryptor()
+        public uint XorKey { get; set; } = 0xDEADBEAF;
+
+        public SimulatorInterfaceCryptorGT7(SimInterfacePacketType packetType)
         {
-            _salsa = new Salsa20(Encoding.ASCII.GetBytes(Key), 0x26);
+            switch (packetType)
+            {
+                case SimInterfacePacketType.PacketType2:
+                    XorKey = 0xDEADBEEF;
+                    break;
+
+                case SimInterfacePacketType.PacketType3:
+                    XorKey = 0x55FABB4F;
+                    break;
+            }
+
+            _salsa = new Salsa20(Encoding.ASCII.GetBytes(Key), Key.Length);
         }
 
         public void Decrypt(Span<byte> bytes)
@@ -29,7 +42,7 @@ namespace GT7Plugin
             _salsa.Set(0);
 
             int iv1 = BinaryPrimitives.ReadInt32LittleEndian(bytes.Slice(0x40)); // Seed IV is always located there
-            int iv2 = (int)(iv1 ^ 0xDEADBEAF); // Notice DEADBEAF, not DEADBEEF
+            int iv2 = (int)(iv1 ^ XorKey);
 
             Span<byte> iv = stackalloc byte[8];
             BinaryPrimitives.WriteInt32LittleEndian(iv, iv2);
