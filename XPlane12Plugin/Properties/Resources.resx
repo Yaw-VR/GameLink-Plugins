@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="def_profile" xml:space="preserve">
+    <value>{"GameName":"X-Plane 12","Name":"Cessna_standard","components":[{"Constant":false,"Input_index":1,"Output_index":1,"MultiplierPos":1.0,"MultiplierNeg":1.0,"Offset":0.0,"Inverse":true,"Limit":-1.0,"Smoothing":0.28678447,"Enabled":true,"Spikeflatter":{"Enabled":false,"Limit":100.0,"Strength":0.5},"Deadzone":0.0,"Type":0,"Condition":[],"Math":[]},{"Constant":false,"Input_index":2,"Output_index":2,"MultiplierPos":1.0,"MultiplierNeg":1.0,"Offset":0.0,"Inverse":true,"Limit":-1.0,"Smoothing":0.5214221,"Enabled":true,"Spikeflatter":{"Enabled":false,"Limit":100.0,"Strength":0.5},"Deadzone":0.0,"Type":0,"Condition":[],"Math":[]},{"Constant":false,"Input_index":0,"Output_index":0,"MultiplierPos":1.0,"MultiplierNeg":1.0,"Offset":0.0,"Inverse":false,"Limit":-1.0,"Smoothing":1.0,"Enabled":true,"Spikeflatter":{"Enabled":false,"Limit":100.0,"Strength":0.5},"Deadzone":0.0,"Type":0,"Condition":[],"Math":[]},{"Constant":false,"Input_index":6,"Output_index":1,"MultiplierPos":0.0004,"MultiplierNeg":0.0004,"Offset":0.0,"Inverse":true,"Limit":-1.0,"Smoothing":1.0,"Enabled":true,"Spikeflatter":{"Enabled":false,"Limit":100.0,"Strength":0.5},"Deadzone":0.0,"Type":1,"Condition":[],"Math":[{"MathType":2,"OtherInput":14}]},{"Constant":false,"Input_index":6,"Output_index":1,"MultiplierPos":0.004,"MultiplierNeg":0.004,"Offset":0.0,"Inverse":false,"Limit":-1.0,"Smoothing":1.0,"Enabled":true,"Spikeflatter":{"Enabled":false,"Limit":100.0,"Strength":0.5},"Deadzone":0.0,"Type":0,"Condition":[],"Math":[]},{"Constant":true,"Input_index":0,"Output_index":4,"MultiplierPos":15.0,"MultiplierNeg":15.0,"Offset":0.0,"Inverse":false,"Limit":-1.0,"Smoothing":1.0,"Enabled":true,"Spikeflatter":{"Enabled":false,"Limit":100.0,"Strength":0.5},"Deadzone":0.0,"Type":0,"Condition":[],"Math":[]},{"Constant":false,"Input_index":14,"Output_index":3,"MultiplierPos":0.7,"MultiplierNeg":0.7,"Offset":0.0,"Inverse":false,"Limit":-1.0,"Smoothing":1.0,"Enabled":true,"Spikeflatter":{"Enabled":false,"Limit":100.0,"Strength":0.5},"Deadzone":0.0,"Type":1,"Condition":[{"ComponentCondition":2,"OtherIndex":9,"Value":1.0}],"Math":[]},{"Constant":false,"Input_index":8,"Output_index":2,"MultiplierPos":0.004,"MultiplierNeg":0.004,"Offset":0.0,"Inverse":false,"Limit":3.0,"Smoothing":1.0,"Enabled":true,"Spikeflatter":{"Enabled":false,"Limit":100.0,"Strength":0.5},"Deadzone":0.0,"Type":0,"Condition":[],"Math":[]},{"Constant":false,"Input_index":8,"Output_index":2,"MultiplierPos":0.02,"MultiplierNeg":0.02,"Offset":0.0,"Inverse":false,"Limit":2.0,"Smoothing":1.0,"Enabled":true,"Spikeflatter":{"Enabled":false,"Limit":100.0,"Strength":0.5},"Deadzone":0.0,"Type":1,"Condition":[],"Math":[]},{"Constant":false,"Input_index":3,"Output_index":3,"MultiplierPos":0.005,"MultiplierNeg":0.005,"Offset":0.0,"Inverse":false,"Limit":-1.0,"Smoothing":1.0,"Enabled":false,"Spikeflatter":{"Enabled":false,"Limit":100.0,"Strength":0.5},"Deadzone":0.0,"Type":0,"Condition":[],"Math":[]},{"Constant":false,"Input_index":3,"Output_index":4,"MultiplierPos":0.01,"MultiplierNeg":0.01,"Offset":0.0,"Inverse":false,"Limit":-1.0,"Smoothing":1.0,"Enabled":false,"Spikeflatter":{"Enabled":false,"Limit":100.0,"Strength":0.5},"Deadzone":0.0,"Type":0,"Condition":[],"Math":[]},{"Constant":false,"Input_index":11,"Output_index":1,"MultiplierPos":15.0,"MultiplierNeg":1.0,"Offset":0.0,"Inverse":true,"Limit":-1.0,"Smoothing":1.0,"Enabled":false,"Spikeflatter":{"Enabled":false,"Limit":100.0,"Strength":0.5},"Deadzone":0.0,"Type":0,"Condition":[],"Math":[]}],"effects":{"EffectID":0,"InputID":-1,"Multiplier":0.7,"Colors":[{"R":66,"G":135,"B":245},{"R":80,"G":80,"B":80},{"R":128,"G":3,"B":117},{"R":110,"G":201,"B":12}]},"functions":[]}</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Go into settings-&gt;Data Output and tick "Send network data output"&lt;br&gt;
+Set IP Address to 127.0.0.1, Port to 4123&lt;br&gt;
+
+In the list tick the following options in the "Network via UDP" column
+&lt;ul&gt;
+&lt;li&gt;3. Speeds&lt;/li&gt;
+&lt;li&gt;4. Gloads&lt;/li&gt;
+&lt;li&gt;16. Angular velocities&lt;/li&gt;
+&lt;li&gt;17. Pitch, roll, &amp; headings&lt;/li&gt;
+&lt;li&gt;37. Engine RPM&lt;/li&gt;
+&lt;li&gt;66. Gears&lt;/li&gt;
+&lt;/ul&gt;</value>
+  </data>
+</root>
