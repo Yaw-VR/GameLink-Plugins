@@ -240,7 +240,7 @@ namespace SharedLib
         public string Version { get; set; }
 
         /// <summary>
-        /// Location of the asset , can be a url or a local file
+        /// HyperspacePhase of the asset , can be a url or a local file
         /// </summary>
         public string Location { get; set; }
 

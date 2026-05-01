@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11520.95
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1976BackToMidway", "1976BackToMidway\1976BackToMidway.csproj", "{94357F09-4D94-4EF8-833F-727AF04C5DD1}"
 EndProject
@@ -26,6 +26,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dirtrally2Plugin", "Dirtrally2Plugin\Dirtrally2Plugin.csproj", "{ED302CA9-CDE5-4E77-950E-816C359D7C7D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EliteDangerousPlugin", "EliteDangerousPlugin\EliteDangerousPlugin.csproj", "{92393AB1-1006-4B0B-9E9D-365A03EFB5C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EliteDangerousOdysseyPlugin", "EliteDangerousOdysseyPlugin\EliteDangerousOdysseyPlugin.csproj", "{B648F9A9-4951-4C59-8053-39C4B735B2A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EuroTruckSimulator2Plugin", "EuroTruckSimulator2Plugin\EuroTruckSimulator2Plugin.csproj", "{D2732427-4BB0-4540-AA74-0DB9987EBE46}"
 EndProject
@@ -58,6 +60,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingPlugin", "iRacingPlugin\iRacingPlugin.csproj", "{59F7712B-2690-40F2-9F30-45E68EDFF408}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KartKraftPlugin", "KartKraftPlugin\KartKraftPlugin.csproj", "{EA0C82A9-58B4-468E-9973-52A206BDF502}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KayakVRMiragePlugin", "KayakVRMiragePlugin\KayakVRMiragePlugin.csproj", "{6A8B2C3D-4E5F-6A7B-8C9D-0E1F2A3B4C5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LFSPlugin", "LFSPlugin\LFSPlugin.csproj", "{563D0FC7-AD70-40BD-87AB-F46816CCD32D}"
 EndProject
@@ -135,6 +139,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FalconBMS", "FalconBMSPlugi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlyDangerous", "FlyDangerous\FlyDangerous.csproj", "{8C2C05C2-3F2E-6D6E-4FF4-AEEDFD88E003}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XwauPlugin", "XwaPlugin\XwauPlugin.csproj", "{B9267946-947B-0627-226C-DC6C672427AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMUPlugin", "LeMansUltimatePlugin\LMUPlugin.csproj", "{A25885E1-D017-50D3-DD84-4731BF1E5D16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFactor2Plugin", "rFactor2Plugin\RFactor2Plugin.csproj", "{7778D85B-C238-F74B-46DE-D4441E6F8794}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -189,6 +199,10 @@ Global
 		{92393AB1-1006-4B0B-9E9D-365A03EFB5C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92393AB1-1006-4B0B-9E9D-365A03EFB5C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92393AB1-1006-4B0B-9E9D-365A03EFB5C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B648F9A9-4951-4C59-8053-39C4B735B2A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B648F9A9-4951-4C59-8053-39C4B735B2A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B648F9A9-4951-4C59-8053-39C4B735B2A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B648F9A9-4951-4C59-8053-39C4B735B2A5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D2732427-4BB0-4540-AA74-0DB9987EBE46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D2732427-4BB0-4540-AA74-0DB9987EBE46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2732427-4BB0-4540-AA74-0DB9987EBE46}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -253,6 +267,10 @@ Global
 		{EA0C82A9-58B4-468E-9973-52A206BDF502}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA0C82A9-58B4-468E-9973-52A206BDF502}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA0C82A9-58B4-468E-9973-52A206BDF502}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A8B2C3D-4E5F-6A7B-8C9D-0E1F2A3B4C5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A8B2C3D-4E5F-6A7B-8C9D-0E1F2A3B4C5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A8B2C3D-4E5F-6A7B-8C9D-0E1F2A3B4C5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A8B2C3D-4E5F-6A7B-8C9D-0E1F2A3B4C5D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{563D0FC7-AD70-40BD-87AB-F46816CCD32D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{563D0FC7-AD70-40BD-87AB-F46816CCD32D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{563D0FC7-AD70-40BD-87AB-F46816CCD32D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -397,6 +415,18 @@ Global
 		{8C2C05C2-3F2E-6D6E-4FF4-AEEDFD88E003}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C2C05C2-3F2E-6D6E-4FF4-AEEDFD88E003}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C2C05C2-3F2E-6D6E-4FF4-AEEDFD88E003}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9267946-947B-0627-226C-DC6C672427AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9267946-947B-0627-226C-DC6C672427AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9267946-947B-0627-226C-DC6C672427AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9267946-947B-0627-226C-DC6C672427AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A25885E1-D017-50D3-DD84-4731BF1E5D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A25885E1-D017-50D3-DD84-4731BF1E5D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A25885E1-D017-50D3-DD84-4731BF1E5D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A25885E1-D017-50D3-DD84-4731BF1E5D16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7778D85B-C238-F74B-46DE-D4441E6F8794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7778D85B-C238-F74B-46DE-D4441E6F8794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7778D85B-C238-F74B-46DE-D4441E6F8794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7778D85B-C238-F74B-46DE-D4441E6F8794}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -411,13 +441,19 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SharedLib\SharedLib.projitems*{247a212c-ea3c-46d9-82b1-2d7a8dd839e1}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{4d31de79-3b0e-4caf-91ab-f3acfbbe5f9b}*SharedItemsImports = 5
+		SharedLib\SharedLib.projitems*{6a8b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{72d8c5ad-5439-4235-a355-a2546a509a05}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{75a5ac51-c340-4fbc-b93e-cc70b9771ff2}*SharedItemsImports = 5
+		SharedLib\SharedLib.projitems*{7778d85b-c238-f74b-46de-d4441e6f8794}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{88c6fdd2-9cd4-4015-bb6c-3389c29003be}*SharedItemsImports = 5
+		SharedLib\SharedLib.projitems*{92393ab1-1006-4b0b-9e9d-365a03efb5c7}*SharedItemsImports = 5
+		SharedLib\SharedLib.projitems*{b648f9a9-4951-4c59-8053-39c4b735b2a5}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{9dd14943-3f95-45c8-aace-0eb2582e47ef}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{a0988e26-18f3-4ae4-95df-3bd3b0abe37e}*SharedItemsImports = 13
+		SharedLib\SharedLib.projitems*{a25885e1-d017-50d3-dd84-4731bf1e5d16}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{acde3183-b78b-48e8-ab68-101ffa2f242f}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{b1a7d5e1-4f6b-4d3a-9f8d-2c8a1e6b5a3f}*SharedItemsImports = 5
+		SharedLib\SharedLib.projitems*{b9267946-947b-0627-226c-dc6c672427af}*SharedItemsImports = 5
 		SharedLib\SharedLib.projitems*{df775724-f4c4-85a1-b474-c422ceb4b242}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

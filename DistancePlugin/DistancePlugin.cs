@@ -81,7 +81,7 @@ namespace YawVR_Game_Engine.Plugin
                 telemetry = new UdpTelemetry<DistanceTelemetryData>(new UdpTelemetryConfig
                 {
                     ReceiveAddress = new IPEndPoint(IPAddress.Parse(settings.IP), settings.Port)
-                });
+                }, new MarshalByteConverter<DistanceTelemetryData>());
 
             }
             catch (Exception x)

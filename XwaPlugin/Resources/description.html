@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Instructions</title>
+    <style type="text/css">
+        
+        li {
+            margin:10px unset;
+        }
+        a, a:visited {
+            color: #37E5DB;
+        }
+        code {
+            display: block;
+            background-color: black;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 5px;
+        }
+        .collapse {
+            display: block;
+            max-height: 0px;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+        }
+
+            .collapse.show {
+                max-height: 99em;
+                transition: max-height 0.5s ease-in-out;
+            }
+
+        .block {
+            margin-top: 10px;
+            background: #f5f5f5;
+            padding: 0;
+        }
+
+        .block__content {
+            border: 1px solid #ccc;
+            padding: 1.5em;
+            height: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>Star Wars X-Wing Alliance Upgrade</h2>
+
+    <h3>Install</h3>
+    <ol>
+        <li>Install Star Wars X-Wing Alliance or Tie Fighter Total Conversion from Steam or elsewhere</li>
+        <li>
+            Download X-Wing Alliance Upgrade mod <a href="https://github.com/JeremyAnsel/XwaInstallerManager/raw/main/zip/XwaInstallerManager.zip">here</a>, extract and install.
+        </li>
+        <li>Or download TFTC <a href="https://www.moddb.com/mods/tie-fighter-total-conversion-tftc">download</a> and install it</li>
+
+        <li>Once installed go into your modded game folder and edit <b>CockpitLook.cfg</b> </li>
+    </ol>
+
+    Make sure the following lines are present and configured as below:
+    <pre>
+yawvr_enable = 0
+
+UDP_telemetry_enabled = 1
+UDP_telemetry_port = 20777
+UDP_telemetry_server = 127.0.0.1
+UDP_telemetry_format = JSON
+UDP_telemetry_sparse = 0
+</pre>
+
+    <p>Watch a demonstration of this plugin on <a href="https://www.youtube.com/watch?v=D4GHwcY5v5w">Youtube</a></p>
+    <br />
+    <small>Version 1.1.0</small>
+</body>
+</html>

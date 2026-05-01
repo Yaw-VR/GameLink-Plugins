@@ -1,0 +1,34 @@
+{
+  "GameName": "RotoVR",
+  "Name": "Default",
+  "Components": [
+    {
+      "Constant": false,
+      "Input_index": 0,
+      "Output_index": 0,
+      "MultiplierPos": 1.0,
+      "MultiplierNeg": 1.0,
+      "Offset": 0.0,
+      "Inverse": false,
+      "Limit": -1.0,
+      "Smoothing": 1.0,
+      "Enabled": true,
+      "Spikeflatter": {
+        "Enabled": false,
+        "Limit": 100.0,
+        "Strength": 0.5
+      },
+      "Deadzone": 0.0,
+      "Type": 0,
+      "Condition": [],
+      "Math": []
+    }
+  ],
+  "Effects": {
+    "EffectID": 0,
+    "InputID": 0,
+    "Multiplier": 0.0,
+    "Colors": []
+  },
+  "Functions": []
+}

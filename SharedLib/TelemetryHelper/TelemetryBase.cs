@@ -1,27 +1,27 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SharedLib.TelemetryHelper
 {
-    internal interface ITelemetry<TData, TConfig> 
-        where TData : struct 
+    internal interface ITelemetry<TData, TConfig>
+        //where TData : struct
         where TConfig : class, new()
     {
         event TelemetryBase<TData, TConfig>.LogEventHandler OnLog;
 
         int Send(TData data);
-
         TData Receive();
 
 
         Task<TData> ReceiveAsync(CancellationToken cancellationToken = default);
 
+        Task BeginAsync(CancellationToken cancellationToken = default);
+
     }
 
     internal abstract class TelemetryBase<TData, TConfig> : ITelemetry<TData, TConfig>, IDisposable
-        where TData : struct
+        //where TData : struct
         where TConfig : class, new()
     {
         public TConfig Config { get; private set; }
@@ -33,59 +33,79 @@ namespace SharedLib.TelemetryHelper
         public abstract int Send(TData message);
         public abstract TData Receive();
 
-        protected TelemetryBase(TConfig config)
+
+        public IByteConverter<TData> Converter;
+
+        public abstract void Dispose();
+
+        public abstract bool IsConnected { get; }
+
+        protected TelemetryBase(TConfig config, IByteConverter<TData> converter)
         {
+            Converter = converter;
+            //if(typeof(TData) == typeof(byte[]))
+            //{
+            //    Converter = (IByteConverter<TData>)(object)new RawBytesConverter();
+            //}
+            //else if (typeof(TData) == typeof(string))
+            //{
+            //    Converter = (IByteConverter<TData>)(object)new StringByteConverter(System.Text.Encoding.ASCII);
+            //}
+            //else if(IsValueType<TData>())
+            //{
+            //    Converter = new MarshalByteConverter<TData>();
+            //}
+            //else
+            //{
+            //    //throw new NotSupportedException($"Type {typeof(TData).Name} is not supported for telemetry conversion.");
+            //}
+
+
+
             Config = config ?? new TConfig();
             Configure(Config);
         }
 
         protected void Log(string message)
         {
-            OnLog?.Invoke(this, $"[{this.GetType().Name}] " + message);
+            OnLog?.Invoke(this, $"[{GetType().Name}] " + message);
         }
 
-        virtual protected byte[] ToBytes<T>(T data) where T : struct
+        public virtual Task<int> SendAsync(TData data, CancellationToken cancellationToken = default)
         {
-            int size = Marshal.SizeOf(data);
-            byte[] arr = new byte[size];
-            using (SafeBuffer buffer = new SafeBuffer(size))
-            {
-                Marshal.StructureToPtr(data, buffer.DangerousGetHandle(), true);
-                Marshal.Copy(buffer.DangerousGetHandle(), arr, 0, size);
-            }
-            return arr;
+            return Task.Run(() => Send(data), cancellationToken);
         }
 
-        virtual protected T FromBytes<T>(byte[] data) where T : struct
+        public virtual Task<TData> ReceiveAsync(CancellationToken cancellationToken = default)
         {
-            T result = default(T);
-            using (SafeBuffer buffer = new SafeBuffer(data.Length))
-            {
-                Marshal.Copy(data, 0, buffer.DangerousGetHandle(), data.Length);
-                result = (T)Marshal.PtrToStructure(buffer.DangerousGetHandle(), typeof(T));
-            }
-            return result;
+            return Task.Run(() =>  Receive() , cancellationToken);
         }
 
-        public abstract void Dispose();
+        private bool IsStruct<T>()
+        {
+            return typeof(T).IsValueType && !typeof(T).IsPrimitive && !typeof(T).IsEnum;
+        }
 
-        public abstract Task<TData> ReceiveAsync(CancellationToken cancellationToken = default);
+        public bool IsValueType<T>()
+        {
+            return typeof(T).IsValueType && typeof(T) != typeof(string) && !typeof(T).IsEnum;
+        }
 
+        //public abstract Task BeginAsync(CancellationToken cancellationToken = default);
+
+        public virtual Task BeginAsync(CancellationToken cancellationToken = default)
+        {
+            return Task.Factory.StartNew(async () =>
+            {
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    _ = await this.ReceiveAsync(cancellationToken);
+                    //await Task.Delay(1800, _cancellationTokenSource.Token);
+                    //Thread.Sleep(1);
+                }
+            }, TaskCreationOptions.LongRunning);
+        }
     }
 
-    internal class SafeBuffer : SafeHandle
-    {
-        public SafeBuffer(int size) : base(IntPtr.Zero, true)
-        {
-            SetHandle(Marshal.AllocHGlobal(size));
-        }
 
-        public override bool IsInvalid => handle == IntPtr.Zero;
-
-        protected override bool ReleaseHandle()
-        {
-            Marshal.FreeHGlobal(handle);
-            return true;
-        }
-    }
 }

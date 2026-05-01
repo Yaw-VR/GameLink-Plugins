@@ -357,3 +357,4 @@ MigrationBackup/
 .vscode
 /_build
 *.bak
+/*.7z
